@@ -102,7 +102,10 @@
               <div *ngFor="let utilisateur of user" class="d-flex align-items-center mb-3">
                 <img src="assets/img/user-3.jpg" alt="image" class="img-fluid w-8 h-8 rounded-circle object-fit-cover me-3">
                 <span>{{ utilisateur.nom }} {{ utilisateur.prenom }}</span>
-                <button class="btn btn-outline-primary py-1 px-4 rounded-pill ms-auto fw-semibold">Reserver</button>
+               
+                <button type="button" class="btn btn-outline-primary py-1 px-4 rounded-pill ms-auto fw-semibold" (click)="selectfemme(utilisateur)" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              Détails
+              </button>
               </div>
             </div>
           </div>
@@ -201,9 +204,72 @@
   <app-footer></app-footer>
   <!-- /Footer -->
   <!-- scrpts -->
- 
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog"> <!-- Removed modal-lg for default medium size -->
+        <div class="modal-content">
+            <div class="modal-header bg-light border-bottom-0">
+                <h5 class="modal-title" id="exampleModalLabel">Détail de femme de ménage</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body bg-white">
+                <div class="row" *ngIf="selectedUtilisateur">
+                    <div class="col-md-12"> <!-- Adjusted for single column layout in a smaller modal -->
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <div class="d-flex justify-content-between">
+                                            <span class="fw-bold">Nom:</span>
+                                            <span class="text-muted">{{ selectedUtilisateur.nom }}</span>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="d-flex justify-content-between">
+                                            <span class="fw-bold">Prénom:</span>
+                                            <span class="text-muted">{{ selectedUtilisateur.prenom }}</span>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="d-flex justify-content-between">
+                                            <span class="fw-bold">Email:</span>
+                                            <span class="text-muted">{{ selectedUtilisateur.email }}</span>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="d-flex justify-content-between">
+                                            <span class="fw-bold">Date de naissance:</span>
+                                            <span class="text-muted">{{ selectedUtilisateur.date_de_naissance }}</span>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="d-flex justify-content-between">
+                                            <span class="fw-bold">Téléphone:</span>
+                                            <span class="text-muted">{{ selectedUtilisateur.telephone }}</span>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="d-flex justify-content-between">
+                                            <span class="fw-bold">Adresse:</span>
+                                            <span class="text-muted">{{ selectedUtilisateur.adresse }}</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="modal-footer bg-light">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                <button type="button" class="btn btn-primary">Réserver</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 </body>
 
 
-<!-- Mirrored from pix-placewise.vercel.app/property-grid.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 10 Mar 2024 18:55:33 GMT -->
 </html>
