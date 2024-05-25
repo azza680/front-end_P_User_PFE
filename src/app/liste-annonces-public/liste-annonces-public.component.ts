@@ -9,23 +9,52 @@ import { Annonce } from '../Entites/Annonce.Entites';
   styleUrls: ['./liste-annonces-public.component.css']
 })
 export class ListeAnnoncesPublicComponent {
- 
+
   listAnnonce: Annonce[];
-  p:number=1;
-  collection:any[]
-  constructor(private service:CrudService,private router:Router ) { }
- 
- 
-  
+  p:number = 1;
+  collection: any[];
+  searchQuery: string = '';
+  activeAnnonce: string = '';
+
+  constructor(private service: CrudService, private router: Router) { }
+
   detailannonce(id: number): void {
     this.router.navigate(['/detailannonce', id]);
   }
- 
- 
+
   ngOnInit(): void {
     this.service.getAnnonce().subscribe(annonce => {
-      this.listAnnonce = annonce
-    })
+      this.listAnnonce = annonce;
+    });
+  }
+  
+  setActiveAnnonce(typeDHebergement: string): void {
+    this.activeAnnonce = typeDHebergement;
   }
 
+  searchAnnonces(): void {
+    if (this.searchQuery.trim() !== '') {
+      this.listAnnonce = this.listAnnonce.filter(annonce =>
+        annonce.type_d_hebergement.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
+    } else {
+      this.getAnnonces(); // Si le champ de recherche est vide, afficher toutes les annonces
+    }
+  }
+
+  private getAnnonces(): void {
+    this.service.getAnnonce().subscribe(annonces => {
+      this.listAnnonce = annonces;
+    });
+  }
+
+  get filteredAnnonce(): Annonce[] {
+    let filtered = this.listAnnonce;
+
+    if (this.activeAnnonce) {
+      filtered = filtered.filter(annonce => annonce.type_d_hebergement === this.activeAnnonce);
+    }
+
+    return filtered;
+  }
 }
