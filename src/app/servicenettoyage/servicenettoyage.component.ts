@@ -14,6 +14,8 @@ export class ServicenettoyageComponent implements OnInit {
   listeutilisateur: Utilisateur[] = [];
   user: Utilisateur[] = [];
   selectedUtilisateur: Utilisateur | null = null; // Pour stocker l'utilisateur sélectionné
+  searchQuery: string = '';
+  activefemme: string = '';
 
   constructor(private crudService: CrudService) { }
 
@@ -35,5 +37,36 @@ export class ServicenettoyageComponent implements OnInit {
 
   selectfemme(utilisateur: Utilisateur): void {
     this.selectedUtilisateur = utilisateur; // Définir l'utilisateur sélectionné
+  }
+  
+
+  setActiveplanning(adresse: string): void {
+    this.activefemme = adresse;
+  }
+
+  searchPlanning(): void {
+    if (this.searchQuery.trim() !== '') {
+      this.listeplanning = this.listeplanning.filter(planning =>
+        planning.adresse.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
+    } else {
+      this.getPlanning(); // Utilisez la méthode appropriée pour récupérer les données (peut-être this.getAnnonces() ?)
+    }
+  }
+
+  private getPlanning(): void {
+    this.crudService.getPlanning().subscribe(plannings => {
+      this.listeplanning = plannings;
+    });
+  }
+
+  get filteredPlanning(): Planning[] {
+    let filtered = this.listeplanning;
+
+    if (this.activefemme) {
+      filtered = filtered.filter(planning => planning.adresse === this.activefemme);
+    }
+
+    return filtered;
   }
 }

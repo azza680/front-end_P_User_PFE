@@ -84,18 +84,10 @@
             <div class="mb-4">
               <div class="property-search__select property-search__col rounded-pill d-flex align-items-center gap-2 px-6 py-3">
                 <span class="material-symbols-outlined mat-icon">distance</span>
-                <select class="form-select" aria-label="Default select example">
-                  <option selected>Location</option>
-                  <option value="1">New York</option>
-                  <option value="2">Chicago</option>
-                  <option value="3">Atlanta</option>
-                </select>
+                <input type="text" class="form-control" aria-label="Search address" [(ngModel)]="searchQuery" (input)="searchPlanning()" placeholder="Rechercher une adresse">
               </div>
             </div>
-            <div class="hr-dashed my-4 opacity-50"></div>
-            <a href="#" class="btn btn-outline-primary py-3 px-6 rounded-pill d-inline-flex align-items-center justify-content-center gap-2 fw-semibold w-100 text-center">
-              <span class="material-symbols-outlined mat-icon clr-neutral-600">search</span> Rechercher
-            </a>
+            
             <div class="hr-dashed my-4 opacity-50"></div>
             <div *ngIf="user && user.length > 0">
               <h5>Les femmes de ménage</h5>
