@@ -559,17 +559,12 @@
           </div>
         </div>
         <div>
-        <button *ngIf="numberOfNights<7 " (click)="makePayment(prix)" class="link d-inline-flex align-items-center gap-2 py-3 px-6 rounded-pill bg-primary-300 clr-neutral-0 :bg-primary-400 :clr-neutral-0 fw-medium w-100 justify-content-center mb-6">
-          <span class="d-inline-block"> Payée {{ prix }} DNT</span>
+        <button  (click)="makePayment(prix)" class="link d-inline-flex align-items-center gap-2 py-3 px-6 rounded-pill bg-primary-300 clr-neutral-0 :bg-primary-400 :clr-neutral-0 fw-medium w-100 justify-content-center mb-6">
+          <span class="d-inline-block"> Payée {{ prixTotale }} DNT</span>
         </button>
-        <button *ngIf="numberOfNights>=7 && numberOfNights<30  && annonce.reduction_semaine==true" (click)="makePayment(prixsemaine)" class="link d-inline-flex align-items-center gap-2 py-3 px-6 rounded-pill bg-primary-300 clr-neutral-0 :bg-primary-400 :clr-neutral-0 fw-medium w-100 justify-content-center mb-6">
-          <span class="d-inline-block"> Payée {{ prixsemaine }} DNT</span>
-        </button>
-        <button *ngIf="numberOfNights>=30  && annonce.reduction_mois==true"  (click)="makePayment(prixmois)" class="link d-inline-flex align-items-center gap-2 py-3 px-6 rounded-pill bg-primary-300 clr-neutral-0 :bg-primary-400 :clr-neutral-0 fw-medium w-100 justify-content-center mb-6">
-          <span class="d-inline-block"> Payée {{ prixmois }} DNT</span>
-        </button>
+        
       </div >
-      </div>
+      </div> 
     </div>
   </form>
 

@@ -1,8 +1,13 @@
-export class Chat{
-    idChat: number | undefined ;
-   id_cond :string | undefined;
-   id_Client :string | undefined;
-    messages :string | undefined ;
-   name :string | undefined;
-   }
-   
+import { Message } from "./Message.Entites";
+
+export class Chat {
+
+    chatId: Number;
+    firstUserName: string;
+    secondUserName: string;
+    messageList: Message[];
+
+    constructor() {
+
+    }
+}
