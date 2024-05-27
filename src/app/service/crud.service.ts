@@ -9,8 +9,7 @@ import { Planning } from '../Entites/Planning.Entites';
 import { ReservationRq } from '../Entites/ReservationRq.Entites';
 import { Evaluation } from '../Entites/Evaluation.Entites';
 
-import { Chat } from '../Entites/Chat.Entites';
-import { ChatMessageDTO } from '../Entites/ChatMessageDTO.Entites';
+
 
 
 import { JwtHelperService } from '@auth0/angular-jwt'
@@ -212,15 +211,5 @@ export class CrudService {
    {
     return this.http.post<any>(this.apiUrl+"/Evaluation",evaluation);
    }
-   //liste chat²
-   public listechat(): Observable<any>{
-    return this.http.get<Chat[]>(
-      this.apiUrl + "/Chat"
-    );
-  }
-  // ajouter chat
-  addNewChat(chat :ChatMessageDTO): Observable<Chat>{
-    return this.http.post<Chat>(
-      this.apiUrl + "/Chat", chat) ;
-  }
+ 
 }

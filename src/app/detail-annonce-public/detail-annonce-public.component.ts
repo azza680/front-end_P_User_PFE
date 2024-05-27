@@ -35,7 +35,8 @@ export class DetailAnnoncePublicComponent {
   reservation:ReservationRq;
   paymentHandler: any = null;
   IsloggedIn:boolean
-  listEvaluation: Evaluation[]= [];;
+  listEvaluation: Evaluation[]= [];prixTotale: number;
+;
   listClientAvis: Utilisateur[];
   nbAvis: number;
   updateForm: FormGroup;
@@ -119,9 +120,7 @@ export class DetailAnnoncePublicComponent {
         this.reservation.nb_nuit=this.numberOfNights;
         this.reservation.nb_vacancier = data.nb_vacancier;
         this.reservation.date;
-        if (this.numberOfNights<7){this.reservation.montant_paye=this.prix}
-        else if (this.numberOfNights>=30){this.reservation.montant_paye=this.prixmois}
-        else {this.reservation.montant_paye=this.prixsemaine}
+        this.reservation.montant_paye=this.prixTotale;
         console.log("nchlh temchy : ", this.reservation);
         this.enableForm = false;
       }
@@ -151,6 +150,9 @@ export class DetailAnnoncePublicComponent {
         this.prixsemaine=this.prix-(this.prix*7)/100;
         this.prixmois=this.prix-(this.prix*15)/100;
     console.log("prix totale  hatha" ,price * this.numberOfNights)
+    if (this.numberOfNights>=7 && this.annonce.reduction_semaine){this.prixTotale=this.prixsemaine}
+        else if (this.numberOfNights>=30 && this.annonce.reduction_mois){this.prixTotale=this.prixmois}
+        else {this.prixTotale=this.prix}
         
       }
     }
@@ -299,6 +301,7 @@ addNewAvis() {
         // Ajoutez l'avis à la liste existante
         this.listEvaluation.unshift(response); // Supposons que response contient l'avis ajouté avec un identifiant généré par le serveur
         // Réinitialisez le formulaire si nécessaire
+        this.nbAvis=this.listEvaluation.length;
         const observables = this.listEvaluation.map(i => this.service.getClientByEvaluation(i.id));
 
       // Utiliser forkJoin pour attendre que toutes les requêtes soient terminées
