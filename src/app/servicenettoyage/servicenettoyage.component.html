@@ -84,25 +84,20 @@
             <div class="mb-4">
               <div class="property-search__select property-search__col rounded-pill d-flex align-items-center gap-2 px-6 py-3">
                 <span class="material-symbols-outlined mat-icon">distance</span>
-                <select class="form-select" aria-label="Default select example">
-                  <option selected>Location</option>
-                  <option value="1">New York</option>
-                  <option value="2">Chicago</option>
-                  <option value="3">Atlanta</option>
-                </select>
+                <input type="text" class="form-control" aria-label="Search address" [(ngModel)]="searchQuery" (input)="searchPlanning()" placeholder="Rechercher une adresse">
               </div>
             </div>
-            <div class="hr-dashed my-4 opacity-50"></div>
-            <a href="#" class="btn btn-outline-primary py-3 px-6 rounded-pill d-inline-flex align-items-center justify-content-center gap-2 fw-semibold w-100 text-center">
-              <span class="material-symbols-outlined mat-icon clr-neutral-600">search</span> Rechercher
-            </a>
+            
             <div class="hr-dashed my-4 opacity-50"></div>
             <div *ngIf="user && user.length > 0">
               <h5>Les femmes de ménage</h5>
               <div *ngFor="let utilisateur of user" class="d-flex align-items-center mb-3">
                 <img src="assets/img/user-3.jpg" alt="image" class="img-fluid w-8 h-8 rounded-circle object-fit-cover me-3">
                 <span>{{ utilisateur.nom }} {{ utilisateur.prenom }}</span>
-                <button class="btn btn-outline-primary py-1 px-4 rounded-pill ms-auto fw-semibold">Reserver</button>
+               
+                <button type="button" class="btn btn-outline-primary py-1 px-4 rounded-pill ms-auto fw-semibold" (click)="selectfemme(utilisateur)" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              Détails
+              </button>
               </div>
             </div>
           </div>
@@ -152,8 +147,11 @@
                           </div>
                           <!-- Part for the button -->
                           <div class="col-2 d-flex justify-content-end">
-                            <button class="btn btn-outline-primary py-2 px-4 rounded-pill fw-semibold">Reserver</button>
-                          </div>
+                            <button type="button" (click)="selectfemme(listeutilisateur[i], planning.id)" class="btn btn-outline-primary py-1 px-4 rounded-pill ms-auto fw-semibold"  data-bs-toggle="modal" data-bs-target="#exampleModal1">
+                              Réserver
+                            </button>
+                                                  
+                            </div>
                         </div>
                       </div>
                     </div>
@@ -201,9 +199,137 @@
   <app-footer></app-footer>
   <!-- /Footer -->
   <!-- scrpts -->
- 
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header bg-light border-bottom-0">
+                <h5 class="modal-title" id="exampleModalLabel">Détail de femme de ménage</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body bg-white">
+                <div class="row" *ngIf="selectedUtilisateur">
+                    <div class="col-md-12">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    <!-- User Details -->
+                                    <li class="list-group-item">
+                                        <div class="d-flex justify-content-between">
+                                            <span class="fw-bold">Nom:</span>
+                                            <span class="text-muted">{{ selectedUtilisateur.nom }}</span>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="d-flex justify-content-between">
+                                            <span class="fw-bold">Prénom:</span>
+                                            <span class="text-muted">{{ selectedUtilisateur.prenom }}</span>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="d-flex justify-content-between">
+                                            <span class="fw-bold">Email:</span>
+                                            <span class="text-muted">{{ selectedUtilisateur.email }}</span>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="d-flex justify-content-between">
+                                            <span class="fw-bold">Adresse:</span>
+                                            <span class="text-muted">{{ selectedUtilisateur.adresse }}</span>
+                                        </div>
+                                    </li>
+
+                                    <!-- Comment Section -->
+                                    <li class="list-group-item">
+                                        <div class="d-flex flex-column">
+                                            <span class="fw-bold">Commentaire:</span>
+                                            <textarea id="message" name="message" rows="4" cols="50" class="form-control mt-2"></textarea>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer bg-light">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-primary">Envoyer</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header bg-light border-bottom-0">
+        <h3 class="modal-title" id="exampleModalLabel1">Demande de réservation</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="modal-body bg-white">
+        <div class="row">
+          <div class="col-md-12" *ngIf="selectedUtilisateur && selectedPlanning">
+            <div class="card border-0 shadow-sm">
+              <div class="card-body">
+                
+                <div class="tab-content">
+                    <div class="d-flex bg-primary-3p gap-3 py-4 px-8 rounded-pill border border-neutral-40 mb-4">
+                      <span class="material-symbols-outlined mat-icon clr-neutral-200 fs-32 flex-shrink-0">group</span>
+                      <div class="flex-grow-1">
+                        <span class="fw-bold">Vous réservez la femme de ménage:</span>
+                        <p class="mb-1">{{ selectedUtilisateur.nom }} {{ selectedUtilisateur.prenom }}</p>
+                      </div>
+                    </div>
+                  <!-- Information d'adresse -->
+                  <div class="tab-pane fade show active" id="booking-list">
+                    <div class="d-flex bg-primary-3p gap-3 py-4 px-8 rounded-pill border border-neutral-40 mb-4">
+                      <span class="material-symbols-outlined mat-icon clr-neutral-200 fs-32 flex-shrink-0">distance</span>
+                      <div class="flex-grow-1">
+                        <p class="mb-1">Adresse: {{ selectedPlanning.adresse }}</p>
+                      </div>
+                    </div>
+                    <!-- Information de date -->
+                    <div class="d-flex bg-primary-3p gap-3 py-4 px-8 rounded-pill border border-neutral-40">
+                      <span class="material-symbols-outlined mat-icon clr-neutral-200 fs-32 flex-shrink-0">calendar_month</span>
+                      <div class="flex-grow-1">
+                        <p class="mb-1">Date: {{ selectedPlanning.jour }} Heure:{{ selectedPlanning.heureDisponible }}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      
+      <div class="modal-footer bg-light">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+        <button (click)="makePayment(selectedPlanning?.prixParHeure)" class="btn btn-danger btn-block">
+          Payer {{ selectedPlanning?.prixParHeure }} DNT
+        </button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
 </body>
 
 
-<!-- Mirrored from pix-placewise.vercel.app/property-grid.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 10 Mar 2024 18:55:33 GMT -->
 </html>
