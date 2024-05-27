@@ -14,6 +14,7 @@ import { ChatMessageDTO } from '../Entites/ChatMessageDTO.Entites';
 
 
 import { JwtHelperService } from '@auth0/angular-jwt'
+import { ReservationFM } from '../Entites/ReservationFM.Entites';
 
 
 @Injectable({
@@ -154,6 +155,9 @@ export class CrudService {
   reserverFromApi(rq:ReservationRq){
     return this.http.post<any>( "http://localhost:8081/api/Reservation" ,rq );
  }
+ reserverFromApii(reservation: ReservationFM): Observable<any> {
+  return this.http.post<any>(`${this.apiUrl}/ReservationFM`, reservation);
+}
  addPlanning(planning:Planning)
    {
     return this.http.post<any>(this.apiUrl+"/Planification",planning);
