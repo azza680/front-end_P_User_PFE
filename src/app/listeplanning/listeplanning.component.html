@@ -73,6 +73,7 @@
                                             <p class="card-text">Heure Disponible: {{ planning.heureDisponible }}</p>
                                             <p class="card-text">Jour: {{ planning.jour }}</p>
                                             <p class="card-text">Adresse: {{ planning.adresse }}</p>
+                                            <p class="card-text">Gouvernorat: {{ planning.gouvernorat }}</p> 
                                             <p class="card-text">Prix Par Heure: {{ planning.prixParHeure }}</p>
                                             <span><i class="mdi mdi-clock-outline"></i> </span>
                                             <div class="d-flex justify-content-end mt-2">
@@ -190,6 +191,36 @@
             <div class="mb-3">
               <label for="inputAdresse" class="form-label">Adresse</label>
               <input type="text" class="form-control" id="inputAdresse" placeholder="Entrez l'adresse" formControlName="adresse">
+            </div>
+            <div class="mb-3">
+              <label for="inputGouvernorat" class="form-label">Gouvernorat</label>
+              <select class="form-control" id="inputGouvernorat" formControlName="gouvernorat">
+                <option value="" disabled selected>...</option>
+                <option value="Ariana">Ariana</option>
+                <option value="Béja">Béja</option>
+                <option value="Ben Arous">Ben Arous</option>
+                <option value="Bizerte">Bizerte</option>
+                <option value="Gabès">Gabès</option>
+                <option value="Gafsa">Gafsa</option>
+                <option value="Jendouba">Jendouba</option>
+                <option value="Kairouan">Kairouan</option>
+                <option value="Kasserine">Kasserine</option>
+                <option value="Kébili">Kébili</option>
+                <option value="Le Kef">Le Kef</option>
+                <option value="Mahdia">Mahdia</option>
+                <option value="La Manouba">La Manouba</option>
+                <option value="Médenine">Médenine</option>
+                <option value="Monastir">Monastir</option>
+                <option value="Nabeul">Nabeul</option>
+                <option value="Sfax">Sfax</option>
+                <option value="Sidi Bouzid">Sidi Bouzid</option>
+                <option value="Siliana">Siliana</option>
+                <option value="Sousse">Sousse</option>
+                <option value="Tataouine">Tataouine</option>
+                <option value="Tozeur">Tozeur</option>
+                <option value="Tunis">Tunis</option>
+                <option value="Zaghouan">Zaghouan</option>
+              </select>
             </div>
             <div class="mb-3">
               <label for="inputPrixHeure" class="form-label">Prix par heure</label>

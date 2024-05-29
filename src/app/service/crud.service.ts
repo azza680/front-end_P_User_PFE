@@ -137,6 +137,9 @@ export class CrudService {
       return false;
     }
   }
+  getReservationRq(userId: number): Observable<ReservationRq[]> {
+    return this.http.get<ReservationRq[]>(`${this.apiUrl}/get-all-by-id-annonceur/${userId}`);
+  }
   
   userDetails(){
     let token:any=localStorage.getItem('role');
@@ -188,6 +191,8 @@ export class CrudService {
     {
       return this.http.get<ReservationRq[]>(this.apiUrl + "/Reservation/get-all-by-id-utilisateur/"+id);
     }
+    
+    
   
   getPlanningById(id:number): Observable<Planning>{
     return this.http.get<Annonce>(this.apiUrl + "/Planification/"+id);
@@ -268,4 +273,11 @@ listeReservationFMByPlanning(id_planning:number):Observable<ReservationFDM[]>
   return this.http.get<ReservationFDM[]>(this.apiUrl + "/ReservationFM/get-all-by-id-Planning/"+id_planning);
 }
 
+   getReservationByUtilisateur(userId: number): Observable<ReservationRq[]> {
+    const url = `${this.apiUrl}/Reservation/get-all-by-id-utilisateur/${userId}`;
+    return this.http.get<ReservationRq[]>(url);
+  }
+  getReservationById(id:number): Observable<ReservationRq>{
+    return this.http.get<ReservationRq>(this.apiUrl + "/Reservation/"+id);
+  }
 }

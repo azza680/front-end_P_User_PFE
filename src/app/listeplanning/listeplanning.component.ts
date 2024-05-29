@@ -37,6 +37,7 @@ export class ListeplanningComponent {
       jour: new FormControl('', [Validators.required]),
       adresse: new FormControl('', [Validators.required]),
       prixParHeure:new FormControl(['', Validators.required]) ,
+      gouvernorat: ['', Validators.required],
     };
     this.updateForm = this.formBuilder.group(formControles);
   }
@@ -51,6 +52,9 @@ export class ListeplanningComponent {
   }
   get prixParHeure() {
     return this.updateForm.get('prixParHeure');
+  }
+  get gouvernorat() {
+    return this.updateForm.get('gouvernorat');
   }
   
  
@@ -67,13 +71,15 @@ export class ListeplanningComponent {
         jour: event.jour,
         adresse: event.adresse,
         prixParHeure: event.prixParHeure,
+        gouvernorat:event.gouvernorat,
       });
     });
     this.PlanningForm = this.formBuilder.group({
       heureDisponible: ['', Validators.required], // Heure disponible
       jour: ['', Validators.required], // Jour
       adresse: ['', Validators.required], // Adresse
-      prixParHeure: ['', Validators.required] // Prix par heure
+      prixParHeure: ['', Validators.required],
+      gouvernorat: ['', Validators.required] // Prix par heure
     });
     this.service.listePlanificationByFdm(this.userDetails.id).subscribe(planning => {
       this.listeplanning = planning; 
@@ -89,13 +95,14 @@ this.updateForm.patchValue({
   jour: planning.jour,
   adresse: planning.adresse,
   prixParHeure: planning.prixParHeure,
+  gouvernorat: planning.gouvernorat,
 });
 this.planning=planning;
   }
   
   updateplanning(id: number, planning: Planning) {
     let data = this.updateForm.value;
-    let model = new Planning(planning.id, data.heureDisponible, data.jour, data.adresse, data.prixParHeure, planning.id_fdm);
+    let model = new Planning(planning.id, data.heureDisponible, data.jour, data.adresse, data.prixParHeure, planning.id_fdm,data.gouvernorat);
 
     console.log("Planning avant modification :", planning); // Affiche le planning avant modification
     console.log("Modèle après modification :", model); // Affiche le modèle avec les nouvelles données
@@ -140,7 +147,7 @@ this.planning=planning;
   addNewPlanning() {
     if (this.PlanningForm.valid) {
       const data = this.PlanningForm.value;
-      const planning = new Planning(undefined, data.heureDisponible, data.jour, data.adresse, data.prixParHeure,this.userDetails.id);
+      const planning = new Planning(undefined, data.heureDisponible, data.jour, data.adresse, data.prixParHeure,this.userDetails.id,data.gouvernorat);
 
       this.service.addPlanning(planning).subscribe(
         () => {
