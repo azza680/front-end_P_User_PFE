@@ -51,7 +51,8 @@ export class ProfilfemmeComponent {
       heureDisponible: ['', Validators.required], // Heure disponible
       jour: ['', Validators.required], // Jour
       adresse: ['', Validators.required], // Adresse
-      prixParHeure: ['', Validators.required] // Prix par heure
+      prixParHeure: ['', Validators.required], // Prix par heure
+      gouvernorat: ['', Validators.required],
     });
       
   }
@@ -67,7 +68,7 @@ export class ProfilfemmeComponent {
    addNewPlanning() {
     if (this.PlanningForm.valid) {
       const data = this.PlanningForm.value;
-      const planning = new Planning(undefined, data.heureDisponible, data.jour, data.adresse, data.prixParHeure,this.userDetails.id);
+      const planning = new Planning(undefined, data.heureDisponible, data.jour, data.adresse, data.prixParHeure,this.userDetails.id, data.gouvernorat);
 
       this.service.addPlanning(planning).subscribe(
         (res) => {

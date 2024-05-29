@@ -55,17 +55,29 @@ export class ServicenettoyageComponent implements OnInit {
     this.selectedPlanning = planning; // Mettre à jour selectedPlanning lors de la sélection d'un planning
   }
 
-  setActiveplanning(adresse: string): void {
-    this.activefemme = adresse;
+  setActiveplanning(gouvernorat: string): void {
+    this.activefemme = gouvernorat;
   }
 
   searchPlanning(): void {
     if (this.searchQuery.trim() !== '') {
       this.listeplanning = this.listeplanning.filter(planning =>
-        planning.adresse.toLowerCase().includes(this.searchQuery.toLowerCase())
+        planning.gouvernorat.toLowerCase().includes(this.searchQuery.toLowerCase())
       );
     } else {
       this.getPlanning();
+    }
+  }
+  
+  searchUtilisateurParNom(): void {
+    if (this.searchQuery.trim() !== '') {
+      // Filtre la liste des utilisateurs en fonction du nom saisi
+      this.user = this.user.filter(utilisateur =>
+        (utilisateur.nom + ' ' + utilisateur.prenom).toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
+    } else {
+      // Si la recherche est vide, recharge tous les utilisateurs
+      this.getUtilisateursParRole('Femme de menage');
     }
   }
 
@@ -79,7 +91,7 @@ export class ServicenettoyageComponent implements OnInit {
     let filtered = this.listeplanning;
 
     if (this.activefemme) {
-      filtered = filtered.filter(planning => planning.adresse === this.activefemme);
+      filtered = filtered.filter(planning => planning.gouvernorat === this.activefemme);
     }
 
     return filtered;

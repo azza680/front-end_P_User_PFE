@@ -81,7 +81,38 @@
             <p class="mb-4 clr-neutral-700 fs-20 fw-medium">Type d'hébergement</p>
             <div class="search-bar">
               <input [(ngModel)]="searchQuery" class="form-control search-input" type="text" name="property-type" id="rent-category">
-              <span class="material-symbols-outlined mat-icon clr-neutral-600">search</span>
+              <span class="material-symbols-outlined mat-icon clr-neutral-600 search-icon" (click)="searchAnnonces()">search</span>
+            </div>
+            <div class="hr-dashed my-6 opacity-50"></div>
+            <p class="mb-4 clr-neutral-700 fs-20 fw-medium">Adresse</p>
+            <div class="search-bar">
+              <select [(ngModel)]="selectedCountry" class="form-select bg-primary-3p border border-neutral-40 rounded-pill py-3 px-5" id="role">
+                <option value="" disabled selected>Votre choix de recherche..</option>
+                <option value="Ariana">Ariana</option>
+                <option value="Béja">Béja</option>
+                <option value="Ben Arous">Ben Arous</option>
+                <option value="Bizerte">Bizerte</option>
+                <option value="Gabès">Gabès</option>
+                <option value="Gafsa">Gafsa</option>
+                <option value="Jendouba">Jendouba</option>
+                <option value="Kairouan">Kairouan</option>
+                <option value="Kasserine">Kasserine</option>
+                <option value="Kébili">Kébili</option>
+                <option value="Le Kef">Le Kef</option>
+                <option value="Mahdia">Mahdia</option>
+                <option value="La Manouba">La Manouba</option>
+                <option value="Médenine">Médenine</option>
+                <option value="Monastir">Monastir</option>
+                <option value="Nabeul">Nabeul</option>
+                <option value="Sfax">Sfax</option>
+                <option value="Sidi Bouzid">Sidi Bouzid</option>
+                <option value="Siliana">Siliana</option>
+                <option value="Sousse">Sousse</option>
+                <option value="Tataouine">Tataouine</option>
+                <option value="Tozeur">Tozeur</option>
+                <option value="Tunis">Tunis</option>
+                <option value="Zaghouan">Zaghouan</option>
+              </select>
             </div>
             <div class="hr-dashed my-6 opacity-50"></div>
             <button class="btn btn-outline-primary py-3 px-6 rounded-pill d-inline-flex align-items-center justify-content-center gap-2 fw-semibold w-100 text-center search-btn"
@@ -92,41 +123,40 @@
         </div>
         <div class="col-md-8">
           <div class="row g-4">
-            
-            <div class="col-12"  *ngFor="let annonce of listAnnonce ">
-                    <div class="property-card property-card--row" *ngIf="annonce.etat && annonce.accorde_user && annonce.verification">
+            <div class="col-12" *ngFor="let annonce of filteredAnnonce">
+              <div class="property-card property-card--row" *ngIf="annonce.etat && annonce.accorde_user && annonce.verification">
                 <div class="property-card__head">
                   <div class="property-card__img">
-                    <img src="{{annonce.image}}" alt="image" class="img-fluid w-100">
+                    <img [src]="annonce.image" alt="image" class="img-fluid w-100">
                   </div>
-                  <a href="property-grid.html" class="link property-card__tag d-inline-block bg-neutral-0 :bg-primary-300 clr-primary-300 :clr-neutral-0 py-2 px-4 rounded-pill fw-medium"> {{annonce.type_d_hebergement}} </a>
+                  <a href="#" class="link property-card__tag d-inline-block bg-neutral-0 clr-primary-300 py-2 px-4 rounded-pill fw-medium">{{ annonce.type_d_hebergement }}</a>
                   <button class="property-card__fav w-10 h-10 rounded-circle bg-neutral-0 d-grid place-content-center border-0 clr-primary-300">
-                    <span class="material-symbols-outlined mat-icon fw-200 property-card__heart"> favorite </span>
+                    <span class="material-symbols-outlined mat-icon fw-200 property-card__heart">favorite</span>
                   </button>
                 </div>
                 <div class="property-card__content">
                   <div class="property-card__body">
                     <div class="d-flex align-items-center gap-1 mb-4">
-                      <span class="material-symbols-outlined mat-icon clr-tertiary-400"> distance </span>
-                      <span class="d-inline-block"> {{annonce.code_postale}} {{annonce.pays}} {{annonce.ville}} </span>
+                      <span class="material-symbols-outlined mat-icon clr-tertiary-400">distance</span>
+                      <span class="d-inline-block">{{ annonce.code_postale }} {{ annonce.pays }} {{ annonce.ville }}</span>
                     </div>
-                    <a href="property-details-1.html" class="link d-block clr-neutral-700 :clr-primary-300 fs-20 fw-medium mb-7"> {{annonce.titre}} </a>
+                    <a href="#" class="link d-block clr-neutral-700 fs-20 fw-medium mb-7">{{ annonce.titre }}</a>
                     <ul class="list list-row flex-wrap dotted-divider">
                       <li>
-                        <span class="material-symbols-outlined mat-icon clr-neutral-600 d-inline-block mb-1"> home_work </span>
-                        <span class="d-block fs-14"> {{annonce.nb_chamber}} Chambres </span>
+                        <span class="material-symbols-outlined mat-icon clr-neutral-600 d-inline-block mb-1">home_work</span>
+                        <span class="d-block fs-14">{{ annonce.nb_chamber }} Chambres</span>
                       </li>
                       <li>
-                        <span class="material-symbols-outlined mat-icon clr-neutral-600 d-inline-block mb-1"> bed </span>
-                        <span class="d-block fs-14"> {{annonce.nb_lits}} lits </span>
+                        <span class="material-symbols-outlined mat-icon clr-neutral-600 d-inline-block mb-1">bed</span>
+                        <span class="d-block fs-14">{{ annonce.nb_lits }} lits</span>
                       </li>
                       <li>
-                        <span class="material-symbols-outlined mat-icon clr-neutral-600 d-inline-block mb-1"> bathtub </span>
-                        <span class="d-block fs-14"> {{annonce.nb_salles}} Salles de bain</span>
+                        <span class="material-symbols-outlined mat-icon clr-neutral-600 d-inline-block mb-1">bathtub</span>
+                        <span class="d-block fs-14">{{ annonce.nb_salles }} Salles de bain</span>
                       </li>
                       <li>
-                        <span class="material-symbols-outlined mat-icon clr-neutral-600 d-inline-block mb-1"> group </span>
-                        <span class="d-block fs-14"> {{annonce.nb_voyageur}} Vacanciers</span>
+                        <span class="material-symbols-outlined mat-icon clr-neutral-600 d-inline-block mb-1">group</span>
+                        <span class="d-block fs-14">{{ annonce.nb_voyageur }} Vacanciers</span>
                       </li>
                     </ul>
                   </div>
@@ -135,32 +165,27 @@
                   </div>
                   <div class="property-card__body">
                     <div class="d-flex flex-wrap justify-content-between align-items-center">
-                      <span class="d-block fs-20 fw-medium clr-primary-300"> {{annonce.prix}} DT <span class="d-inline-block clr-neutral-500 fs-14 fw-normal"> /Nuit </span>
-                      </span>
-                      <button (click)="detailannonce(annonce.id)" class="btn btn-outline-primary py-3 px-6 rounded-pill d-inline-flex align-items-center gap-1 fw-semibold"> Explorez</button>
+                      <span class="d-block fs-20 fw-medium clr-primary-300">{{ annonce.prix }} DT <span class="d-inline-block clr-neutral-500 fs-14 fw-normal">/Nuit</span></span>
+                      <button (click)="detailannonce(annonce.id)" class="btn btn-outline-primary py-3 px-6 rounded-pill d-inline-flex align-items-center gap-1 fw-semibold">Explorez</button>
                     </div>
-                    
                   </div>
                 </div>
               </div>
-            
             </div>
             <div class="col-12">
-
               <nav>
                 <ul class="pagination gap-3 justify-content-center">
-                  
                   <li class="page-item">
                     <a class="page-link p-0 w-10 h-10 d-grid place-content-center lh-1 rounded-circle border border-primary-300 clr-primary-300" href="#">
-                      <span class="material-symbols-outlined mat-icon fs-16"> arrow_back_ios </span>
+                      <span class="material-symbols-outlined mat-icon fs-16">arrow_back_ios</span>
                     </a>
                   </li>
-                  <li class="page-item"><a class="page-link p-0 w-10 h-10 d-grid place-content-center lh-1 rounded-circle border border-primary-300 clr-neutral-0 :clr-neutral-0 active-bg" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link p-0 w-10 h-10 d-grid place-content-center lh-1 rounded-circle border border-primary-300 clr-neutral-0 active-bg" href="#">1</a></li>
                   <li class="page-item"><a class="page-link p-0 w-10 h-10 d-grid place-content-center lh-1 rounded-circle border border-primary-300 clr-primary-300" href="#">2</a></li>
                   <li class="page-item"><a class="page-link p-0 w-10 h-10 d-grid place-content-center lh-1 rounded-circle border border-primary-300 clr-primary-300" href="#">3</a></li>
                   <li class="page-item">
                     <a class="page-link p-0 w-10 h-10 d-grid place-content-center lh-1 rounded-circle border border-primary-300 clr-primary-300" href="#">
-                      <span class="material-symbols-outlined mat-icon fs-16"> arrow_forward_ios </span>
+                      <span class="material-symbols-outlined mat-icon fs-16">arrow_forward_ios</span>
                     </a>
                   </li>
                 </ul>
@@ -171,6 +196,7 @@
       </div>
     </div>
   </div>
+  
   <!-- /Property List -->
   <!-- Footer -->
   <app-footer></app-footer>
