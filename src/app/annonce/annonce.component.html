@@ -95,7 +95,7 @@
                                                       <div class="category-card border rounded-4 transition bg-neutral-0 :bg-primary-300 :clr-neutral-0">
                                                           <div class="p-8">
                                                               <span class="material-symbols-outlined fs-60 clr-secondary-500 lh-1 transition"> home_work </span>
-                                                              <h5><input formControlName="type_d_hebergement" value="Maison d'hotes" type="radio"> Maison d'hotes </h5>
+                                                              <h5><input formControlName="type_d_hebergement" value="Maison d'hôtes" type="radio"> Maison d'hôtes </h5>
                                                           </div>
                                                           
                                                       </div>
@@ -113,7 +113,7 @@
                                                       <div class="category-card border rounded-4 transition bg-neutral-0 :bg-primary-300 :clr-neutral-0">
                                                           <div class="p-8">
                                                               <span class="material-symbols-outlined fs-60 clr-primary-300 lh-1 transition"> apartment </span>
-                                                              <h5 ><input formControlName="type_d_hebergement" value="Chamber d'hotes" type="radio"> Chamber d'hotes </h5>
+                                                              <h5 ><input formControlName="type_d_hebergement" value="Chambre d'hôtes" type="radio"> Chambre d'hôtes </h5>
                                                           </div>
                                                           
                                                       </div>
@@ -341,7 +341,13 @@
                                           <label for="dropzone-file" class="d-flex flex-column align-items-center justify-content-center w-100 cursor-pointer bg-primary-3p rounded-4">
                                             <span class="d-flex flex-column align-items-center justify-content-center py-12">
                                               
-                                              <input class="form-control " type="file" id="image" name="dzImage" accept="image/*" (change)=" onSelectFile($event)" formControlName="image">
+                                              <!--
+                                              <input class="form-control" type="file" id="image" name="dzImage" accept="image/*" (change)="onSelect($event)" multiple>
+                                              -->                                             
+
+                                              <input class="form-control" type="file" id="image" name="dzImage" accept="image/*" (change)="onSelectFile($event)" formControlName="image" >
+
+
                                               <span class="d-flex align-items-center justify-content-center flex-wrap gap-5">
                                                 <span class="d-flex align-items-center gap-2">
                                                   <span class="material-symbols-outlined mat-icon fw-200 clr-neutral-500 flex-shrink-0"> gpp_maybe </span>
@@ -353,6 +359,7 @@
                                                 </span>
                                               </span>
                                             </span>
+                                            <img *ngFor="let url of urls"  [src]="url" height="100" >
                                           </label>
                                         </div>
                                       </div>
@@ -425,7 +432,6 @@
                                         <select class="form-select bg-primary-3p border border-neutral-40 rounded-pill py-3 px-5" id="role" formControlName="pays">
                                         <option value="" disabled selected>...</option>
                                         <option value="Ariana">Ariana</option>
-                                             <option value="Béja">Béja</option>
                                              <option value="Béja">Béja</option>
                                              <option value="Ben Arous">Ben Arous</option>
                                              <option value="Bizerte">Bizerte</option>

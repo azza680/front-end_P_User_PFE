@@ -33,26 +33,49 @@
             </a>
           </div>
           <div >
-            <form action="#">
+            <form (ngSubmit)="submitSearchForm()">
               <div class="property-search p-6 rounded-3 bg-neutral-0">
                 <div class="property-search__content d-flex flex-wrap justify-content-center align-items-center gap-4">
                   
                   <div class="property-search__select property-search__col rounded-pill d-flex align-items-center gap-2 px-6">
                     <span class="material-symbols-outlined mat-icon"> distance </span>
-                    <select class="form-select" aria-label="Default select example">
-                      <option selected>Location</option>
-                      <option value="1">New York</option>
-                      <option value="2">Chicago</option>
-                      <option value="3">Atlanta</option>
+                    <select class="form-select" aria-label="Default select example" [(ngModel)]="selectedAddress" name="selectedAddress">
+                      <option value="" disabled selected>Adresse</option>
+                <option value="Ariana">Ariana</option>
+                <option value="Béja">Béja</option>
+                <option value="Ben Arous">Ben Arous</option>
+                <option value="Bizerte">Bizerte</option>
+                <option value="Gabès">Gabès</option>
+                <option value="Gafsa">Gafsa</option>
+                <option value="Jendouba">Jendouba</option>
+                <option value="Kairouan">Kairouan</option>
+                <option value="Kasserine">Kasserine</option>
+                <option value="Kébili">Kébili</option>
+                <option value="Le Kef">Le Kef</option>
+                <option value="Mahdia">Mahdia</option>
+                <option value="La Manouba">La Manouba</option>
+                <option value="Médenine">Médenine</option>
+                <option value="Monastir">Monastir</option>
+                <option value="Nabeul">Nabeul</option>
+                <option value="Sfax">Sfax</option>
+                <option value="Sidi Bouzid">Sidi Bouzid</option>
+                <option value="Siliana">Siliana</option>
+                <option value="Sousse">Sousse</option>
+                <option value="Tataouine">Tataouine</option>
+                <option value="Tozeur">Tozeur</option>
+                <option value="Tunis">Tunis</option>
+                <option value="Zaghouan">Zaghouan</option>
                     </select>
                   </div>
                   <div class="property-search__select property-search__col rounded-pill d-flex align-items-center gap-2 px-6">
                     <span class="material-symbols-rounded mat-icon"> grid_view </span>
-                    <select class="form-select" aria-label="Default select example">
-                      <option selected>Property Type</option>
-                      <option value="1">Houses</option>
-                      <option value="2">Apartments</option>
-                      <option value="3">Commercial</option>
+                    <select class="form-select" aria-label="Default select example" [(ngModel)]="selectedAccommodationType" name="selectedAccommodationType">
+                      <option value="" disabled selected>Type d'hébergement</option>
+                <option value="Appartement">Appartement</option>
+                <option value="Maison d'hôtes">Maison d'hôtes</option>
+                <option value="Camping car">Camping car</option>
+                <option value="Chambre d'hôtes">Chambre d'hôtes</option>
+                <option value="Cabane">Cabane</option>
                     </select>
                   </div>
                   

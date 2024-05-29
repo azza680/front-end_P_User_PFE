@@ -80,7 +80,15 @@
             <div class="hr-dashed my-6 opacity-50"></div>
             <p class="mb-4 clr-neutral-700 fs-20 fw-medium">Type d'hébergement</p>
             <div class="search-bar">
-              <input [(ngModel)]="searchQuery" class="form-control search-input" type="text" name="property-type" id="rent-category">
+              <select class="form-control" [(ngModel)]="searchQuery" >
+                <option value="" disabled selected>Sélectionnez le type d'hébergement...</option>
+                <option value="Appartement">Appartement</option>
+                <option value="Maison d'hôtes">Maison d'hôtes</option>
+                <option value="Camping car">Camping car</option>
+                <option value="Chambre d'hôtes">Chambre d'hôtes</option>
+                <option value="Cabane">Cabane</option>
+              </select>
+              
               <span class="material-symbols-outlined mat-icon clr-neutral-600 search-icon" (click)="searchAnnonces()">search</span>
             </div>
             <div class="hr-dashed my-6 opacity-50"></div>
@@ -127,7 +135,7 @@
               <div class="property-card property-card--row" *ngIf="annonce.etat && annonce.accorde_user && annonce.verification">
                 <div class="property-card__head">
                   <div class="property-card__img">
-                    <img [src]="annonce.image" alt="image" class="img-fluid w-100">
+                    <img [src]="annonce.image[0]" alt="image" class="img-fluid w-100">
                   </div>
                   <a href="#" class="link property-card__tag d-inline-block bg-neutral-0 clr-primary-300 py-2 px-4 rounded-pill fw-medium">{{ annonce.type_d_hebergement }}</a>
                   <button class="property-card__fav w-10 h-10 rounded-circle bg-neutral-0 d-grid place-content-center border-0 clr-primary-300">

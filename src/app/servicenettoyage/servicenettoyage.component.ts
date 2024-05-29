@@ -20,6 +20,7 @@ export class ServicenettoyageComponent implements OnInit {
   selectedUtilisateur: Utilisateur | null = null;
   selectedPlanning: Planning | null = null; // Nouvelle propriété pour le planning sélectionné
   searchQuery: string = '';
+  searchCityQuery: string = '';
   activefemme: string = '';
   paymentHandler: any = null;
   listReservation: import("c:/P1_frontend/frontend/src/app/Entites/ReservationFDM.Entites").ReservationFDM[][];

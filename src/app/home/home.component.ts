@@ -18,7 +18,17 @@ export class HomeComponent {
   constructor(private service:CrudService,private router:Router ) { }
  
  
-  
+  selectedAddress: string = '';
+  selectedAccommodationType: string = '';
+
+
+  submitSearchForm() {
+    // Récupérez les valeurs sélectionnées et passez-les à votre route /liste_annonce_public
+    const address = this.selectedAddress;
+    const accommodationType = this.selectedAccommodationType;
+    // Si vous devez passer les valeurs sélectionnées en tant que paramètres de requête, vous pouvez les concaténer à l'URL
+    this.router.navigate(['/liste_annonces_public'], { queryParams: { address: address, type: accommodationType } });
+  }
   detailannonce(id: number): void {
     this.router.navigate(['/detailannonce', id]);
   }

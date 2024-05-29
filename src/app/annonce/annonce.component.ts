@@ -235,27 +235,71 @@ private _patchValues(equipments: Equipementnterface[], formControlName: string):
     );
   });
 }
+userFiles: any[] = []; // Pour stocker les fichiers sélectionnés
+imgURLs: string[] = []; // Pour stocker les URLs des images
+messages: string[] = []; // Pour stocker les messages d'erreur
+urls: string[] = [];
+
+    onSelect(e: any) {
+        if (e.target.files && e.target.files.length > 0) {
+            const files: File[] = Array.from(e.target.files); // Assurer que files est de type File[]
+            const fileReaders: Promise<string>[] = files.map(file => {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = (event: any) => resolve(event.target.result);
+                    reader.onerror = reject;
+                });
+            });
+
+            // Utiliser Promise.all pour attendre que tous les fichiers soient lus
+            Promise.all(fileReaders)
+                .then(results => {
+                  console.log("hathy resultat ",results)
+                    this.urls = results;
+                    console.log("URLs des fichiers :", this.urls);
+                })
+                .catch(error => {
+                    console.error("Erreur lors de la lecture des fichiers :", error);
+                });
+
+        }
+    }
 
 
+onSelectFile(event: any) {
+  if (event.target.files.length > 0) {
+    const files = event.target.files;
+    this.userFiles = []; // Initialisez un tableau pour stocker les fichiers
+    this.imgURLs = []; // Initialisez un tableau pour stocker les URLs des images
+    this.messages = []; // Initialisez un tableau pour stocker les messages d'erreur
 
-  
-  onSelectFile(event: any) {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      this.userFile = file;
-      var mimeType = event.target.files[0].type;
+    for (let file of files) {
+      var mimeType = file.type;
       if (mimeType.match(/image\/*/) == null) {
-        this.message = 'Only images are supported.';
-        return;
+        this.messages.push('Only images are supported for file: ' + file.name);
+        continue;
       }
+
+      this.userFiles.push(file);
+
       var reader = new FileReader();
-      this.imagePath = file;
       reader.readAsDataURL(file);
       reader.onload = (_event) => {
-        this.imgURL = reader.result;
+        this.imgURLs.push(reader.result as string);
       };
     }
+console.log("hatha this.imageUrls",this.imgURLs)
+    if (this.messages.length > 0) {
+      this.message = this.messages.join(' ');
+    } else {
+      this.message = '';
+    }
   }
+}
+
+  
+  
   get type_d_hebergement() { return this.Partie1Form.get('type_d_hebergement'); }
   get nb_voyageur() 
   { const value = this.quantityInput.nativeElement.value;
