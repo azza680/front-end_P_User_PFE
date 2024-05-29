@@ -105,11 +105,11 @@
         <div class="col-md-8">
           <div class="row g-4">
             <div class="container-xl">
-              <div class="row g-4">
-                <div class="col-12" *ngFor="let planning of listeplanning; let i = index">
-                  <div class="property-card  shadow-sm mb-4 p-3">
+              <div class="row g-4" *ngFor="let planning of listeplanning.slice().reverse();; let i = index">
+                <div class="col-12" >
+                  <div class="property-card  shadow-sm mb-4 p-3"*ngIf="isPastDate(planning.jour) " >
                     <div class="card shadow-sm mb-3">
-                      <div class="card-body p-8" *ngIf="listeutilisateur[i]">
+                      <div class="card-body p-8" *ngIf="listeutilisateur[i] && isPastDate(planning.jour)">
                         <div  class="row align-items-center ">
                           <!-- Part for the image -->
                           <div class="col-2 d-flex align-items-center justify-content-center">
@@ -140,7 +140,7 @@
                               </li>
                               <li class="mb-2">
                                 <span class="d-block fs-6">
-                                  <strong>Prix Par Heure:</strong> {{ planning.prixParHeure }}
+                                  <strong>Prix Par Heure:</strong> {{ planning.prixParHeure }} TND
                                 </span>
                               </li>
                             </ul>

@@ -134,63 +134,146 @@
           <app-header3></app-header3>
         </div>
         <div class="col-lg-8 col-xl-9">
-          <div class="col-xl-12">
-            <ul class="list gap-6">
-              <li>
-                <div class="p-6 p-xl-10 rounded-4 bg-neutral-0 shadow-3">
-                  <div class="hr-line my-6"></div>
-                  <div class="row g-4">
-                    <div class="col-12">
-                      <div class="property-card property-card--row">
+          <div class="col-xl-12" >
+            
+                <div class="p-3 p-xl-3 rounded-4 bg-neutral-0 shadow-3 mb-4" *ngFor="let reservation of listReservation; let i = index ">
+                  <div class="row g-4" >
+                    <div class="col-12" *ngIf="listeReservateur[i]">
+                      <div class="property-card property-card--row" *ngIf="listAnnonce[i]">
                         <div class="property-card__head">
                           <div class="property-card__img">
-                            <img src="image-url.jpg" alt="Image de l'annonce" class="fixed-size-image">
+                            <img src="{{listAnnonce[i].image}}" alt="Image de l'annonce" class="fixed-size-image">
                           </div>
-                          <button class="property-card__fav w-10 h-10 rounded-circle bg-neutral-0 d-grid place-content-center border-0 clr-primary-300">
-                            <span class="material-symbols-outlined mat-icon fw-200 property-card__heart">favorite</span>
-                          </button>
+                          <a href="property-grid.html" class="link property-card__tag d-inline-block bg-neutral-0 :bg-primary-300 clr-primary-300 :clr-neutral-0 py-2 px-4 rounded-pill fw-medium"> {{listAnnonce[i].type_d_hebergement}} </a>
+                  <button class="property-card__fav w-10 h-10 rounded-circle bg-neutral-0 d-grid place-content-center border-0 clr-primary-300">
+                    <span class="material-symbols-outlined mat-icon fw-200 property-card__heart"> favorite </span>
+                  </button>
                         </div>
                         <div class="property-card__content">
                           <div class="property-card__body">
                             <div class="d-flex justify-content-between mb-6">
                               <div class="d-flex align-items-center gap-1">
-                                <span class="material-symbols-outlined mat-icon clr-tertiary-400">distance</span>
-                                <span class="d-inline-block">Pays : Ville :</span>
+                                  <i class="material-icons clr-tertiary-400">location_on</i>
+                                  <span class="d-inline-block">{{ listAnnonce[i].pays }} {{ listAnnonce[i].ville }} {{ listAnnonce[i].code_postale }}</span>
                               </div>
-                            </div>
-                            <a href="property-details-1.html" class="link d-block clr-neutral-700 clr-primary-300 fs-20 fw-medium mb-7">Titre de l'annonce</a>
-                            <ul class="list list-row flex-wrap dotted-divider">
-                              <li>
-                                <span class="material-symbols-outlined mat-icon clr-neutral-600 d-inline-block mb-1">person</span>
-                                <span class="d-block fs-14">Nom du client</span>
+                              <div>
+                                  <span class="d-block fs-14">Réservé le {{ reservation.date }} </span>
+                              </div>
+                          </div>
+                          
+                            <a  class="link d-block clr-neutral-700 clr-primary-300 fs-24 fw-bold mb-7">
+                               
+                                Titre : {{ listAnnonce[i].titre }}
+                            </a>
+                            <ul class="list list-row flex-wrap dotted-divider"><li></li>
+                              <li class="mb-2">
+                                <span class="rounded-pill px-6 py-2 mt-2">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 20 20">
+                                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                                  </svg>
+                                  <span class="fs-14 fw-bold">Nom du client :</span>
+                                  <span class="fs-14">{{ listeReservateur[i].nom }} {{ listeReservateur[i].prenom }}</span>
+                                </span>
                               </li>
-                              <li>
-                                <span class="material-symbols-outlined mat-icon clr-neutral-600 d-inline-block mb-1">calendar_today</span>
-                                <span class="d-block fs-14">Date de réservation</span>
+                              <li class="mb-2">
+                                <span class="rounded-pill px-6 py-2 mt-2">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-coin" viewBox="0 0 20 20">
+                                    <path d="M5.5 9.511c.076.954.83 1.697 2.182 1.785V12h.6v-.709c1.4-.098 2.218-.846 2.218-1.932 0-.987-.626-1.496-1.745-1.76l-.473-.112V5.57c.6.068.982.396 1.074.85h1.052c-.076-.919-.864-1.638-2.126-1.716V4h-.6v.719c-1.195.117-2.01.836-2.01 1.853 0 .9.606 1.472 1.613 1.707l.397.098v2.034c-.615-.093-1.022-.43-1.114-.9zm2.177-2.166c-.59-.137-.91-.416-.91-.836 0-.47.345-.822.915-.925v1.76h-.005zm.692 1.193c.717.166 1.048.435 1.048.91 0 .542-.412.914-1.135.982V8.518z"/>
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                    <path d="M8 13.5a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11m0 .5A6 6 0 1 0 8 2a6 6 0 0 0 0 12"/>
+                                  </svg>
+                                  <span class="fs-14 fw-bold">Montant payé :</span>
+                                  <span class="fs-14">{{ reservation.montant_paye }} TND</span>
+                                </span>
+                              </li>
+                              
+                              <li class="mb-2">
+                                <span class="rounded-pill px-6 py-2 mt-2">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people" viewBox="0 0 20 20">
+                                    <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1L7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002-.014.002zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0M6.936 9.28a6 6 0 0 0-1.23-.247A7 7 0 0 0 5 9c-4 0-5 3-5 4q0 1 1 1h4.216A2.24 2.24 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816M4.92 10A5.5 5.5 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0m3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4"/>
+                                  </svg>
+                                  <span class="fs-14 fw-bold">Nombre de voyageurs :</span>
+                                  <span class="fs-14">{{ reservation.nb_vacancier }} personne(s)</span>
+                                </span>
+                              </li>
+                              
+                              <li class="mb-2">
+                                <span class="rounded-pill px-6 py-3 mt-2 ">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cloud-moon" viewBox="0 0 20 20">
+                                    <path d="M7 8a3.5 3.5 0 0 1 3.5 3.555.5.5 0 0 0 .625.492A1.503 1.503 0 0 1 13 13.5a1.5 1.5 0 0 1-1.5 1.5H3a2 2 0 1 1 .1-3.998.5.5 0 0 0 .509-.375A3.5 3.5 0 0 1 7 8m4.473 3a4.5 4.5 0 0 0-8.72-.99A3 3 0 0 0 3 16h8.5a2.5 2.5 0 0 0 0-5z"/>
+                                    <path d="M11.286 1.778a.5.5 0 0 0-.565-.755 4.595 4.595 0 0 0-3.18 5.003 5.5 5.5 0 0 1 1.055.209A3.6 3.6 0 0 1 9.83 2.617a4.593 4.593 0 0 0 4.31 5.744 3.58 3.58 0 0 1-2.241.634q.244.477.394 1a4.59 4.59 0 0 0 3.624-2.04.5.5 0 0 0-.565-.755 3.593 3.593 0 0 1-4.065-5.422z"/>
+                                  </svg>
+                                  <span class="fs-14 fw-bold">Nombre de nuits :</span>
+                                  <span class="fs-14">{{ reservation.nb_nuit }}</span>
+                                </span>
+                              </li>
+                              <li class="mb-2">
+                                <span class="rounded-pill px-6 py-2 mt-2">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-check" viewBox="0 0 20 20">
+                                    <path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0"/>
+                                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
+                                  </svg>
+                                  <span class="fs-14 fw-bold">Date de réservation :</span>
+                                  <span class="fs-14">{{ reservation.date_arrivee }}/{{ reservation.date_depart }}</span>
+                                </span>
                               </li>
                             </ul>
-                          </div>
+                            
+                            
+                            
+                            
+                            
+                          
+                          
+                          
+                            
+                        </div>
+                        
+                        
                           <div class="property-card__body py-0">
                             <div class="hr-dashed"></div>
                           </div>
-                          <div class="property-card__body">
+                          <div class="property-card__body py-2">
                             <div class="d-flex flex-wrap justify-content-between align-items-center">
-                              <span class="d-block fs-20 fw-medium clr-primary-300"></span>
-                              <button class="btn btn-sm btn-outline-primary rounded-pill px-4 py-2">
-                                Confirmer
-                              </button>
-                              <button class="btn btn-sm btn-outline-primary rounded-pill px-4 py-2">
-                                Non confirmé
-                              </button>
+                                <!-- Property title or other information -->
+                                <span class="d-block fs-20 fw-medium clr-primary-300"></span>
+                                
+                                <!-- Container for buttons and badges aligned to the right -->
+                                <div class="ml-auto text-end">
+                                    <!-- Buttons for confirming or not confirming the reservation -->
+                                    <button class="btn btn-sm btn-outline-primary rounded-pill px-4 py-2 ms-2" *ngIf="!reservation.etat" (click)="ConfirmerReservation(reservation)">
+                                        Confirmer
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-primary rounded-pill px-4 py-2 ms-2" *ngIf="!reservation.etat" (click)="NonConfirmerReservation(reservation)">
+                                        Non confirmé
+                                    </button>
+                                    
+                                    <!-- Badge indicating the confirmation status -->
+                                    <span *ngIf="reservation.confirmation && reservation.etat" class="badge bg-success text-light rounded-pill px-4 py-2 mt-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle me-2" viewBox="0 0 16 16">
+                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM3.97 6.97a.75.75 0 1 0-1.06 1.06L6.75 12.75a.75.75 0 0 0 1.06 0l5.25-5.25a.75.75 0 0 0-1.06-1.06L7.5 10.69 3.97 6.97z"/>
+                                        </svg>
+                                        Confirmé
+                                    </span>
+                                    <span *ngIf="!reservation.confirmation && reservation.etat" class="badge bg-danger text-light rounded-pill px-4 py-2 mt-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle me-2" viewBox="0 0 16 16">
+                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                        </svg>
+                                        Non confirmé
+                                    </span>
+                                </div>
                             </div>
-                          </div>
+                        </div>
+                        
+                        
+                        
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </li>
-            </ul>
+             
           </div>
         </div>
       </div>

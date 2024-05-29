@@ -22,6 +22,8 @@ export class ServicenettoyageComponent implements OnInit {
   searchQuery: string = '';
   activefemme: string = '';
   paymentHandler: any = null;
+  listReservation: import("c:/P1_frontend/frontend/src/app/Entites/ReservationFDM.Entites").ReservationFDM[][];
+  listConfirmation: boolean[];
 
   constructor(private crudService: CrudService, private route: Router, private router: ActivatedRoute) { }
 
@@ -68,12 +70,31 @@ export class ServicenettoyageComponent implements OnInit {
       this.getPlanning();
     }
   }
-
+  isPastDate(date: string): boolean {
+    const planningDate = new Date(date);
+    const currentDate = new Date();
+    return planningDate >= currentDate;
+  }
   private getPlanning(): void {
     this.crudService.getPlanning().subscribe(plannings => {
       this.listeplanning = plannings;
+  
+      this.listConfirmation = []; // Réinitialiser la liste des confirmations
+  
+      // Parcourir chaque planning
+      this.listeplanning.forEach(planning => {
+        this.crudService.listeReservationFMByPlanning(planning.id).subscribe(reservations => {
+          // Vérifier si au moins une réservation est confirmée dans ce planning
+          const planningConfirmation = reservations.some(reservation => reservation.confirmation);
+          
+          // Ajouter le résultat à la liste des confirmations
+          this.listConfirmation.push(planningConfirmation);
+        });
+      });
     });
+    console.log("this.listConfirmation",this.listConfirmation)
   }
+  
 
   get filteredPlanning(): Planning[] {
     let filtered = this.listeplanning;
@@ -90,10 +111,8 @@ export class ServicenettoyageComponent implements OnInit {
     let datas = this.crudService.getUserInfo(); // Utilisation de crudService au lieu de service
 
     rq.id_client = datas?.id;
-    rq.id_planification = this.selectedPlanning?.id;
-    rq.date = new Date();
-    rq.etat = false;  // Par exemple, initialement à false jusqu'à confirmation
-    rq.confirmation = false; // Par exemple, initialement à false jusqu'à confirmation
+    
+    console.log("hathy reservation ",rq)
 
     this.crudService.reserverFromApii(rq).subscribe((data: any) => {
       this.route.navigate(['mes_reservation']);
@@ -127,14 +146,10 @@ export class ServicenettoyageComponent implements OnInit {
 
   createReservation() {
     const reservation = new ReservationFM();
-    reservation.id_client = this.crudService.getUserInfo()?.id;
     reservation.id_planification = this.selectedPlanning?.id;
-    reservation.date = new Date();
     reservation.montant_paye = this.selectedPlanning?.prixParHeure; // Exemple d'attribution du montant
-    reservation.etat = false;  // Initialement à false
-    reservation.confirmation = false; // Initialement à false
-    reservation.utilisateur = this.selectedUtilisateur;
-    reservation.planning = this.selectedPlanning;
+   
+    
 
     this.reserver(reservation);
   }

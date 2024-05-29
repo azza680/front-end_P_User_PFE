@@ -1,12 +1,8 @@
-export class ReservationRq{
+export class ReservationRQFDM{
     constructor(
         public id?:number,
         public id_client?:number,
-        public id_annonce?:number,
-        public date_arrivee?:string,
-        public date_depart?:string,
-        public nb_nuit?:number,
-        public nb_vacancier?:number,
+        public id_planing?:number,
         public date?:string,
         public montant_paye?:number,
         public etat?:boolean,

@@ -14,6 +14,8 @@ import { Evaluation } from '../Entites/Evaluation.Entites';
 
 import { JwtHelperService } from '@auth0/angular-jwt'
 import { ReservationFM } from '../Entites/ReservationFM.Entites';
+import { ReservationFDM } from '../Entites/ReservationFDM.Entites';
+import { ReservationRQFDM } from '../Entites/ReservationRQFDM.Entites';
 
 
 @Injectable({
@@ -154,8 +156,8 @@ export class CrudService {
   reserverFromApi(rq:ReservationRq){
     return this.http.post<any>( "http://localhost:8081/api/Reservation" ,rq );
  }
- reserverFromApii(reservation: ReservationFM): Observable<any> {
-  return this.http.post<any>(`${this.apiUrl}/ReservationFM`, reservation);
+ reserverFromApii(reservation: ReservationFM) {
+  return this.http.post<any>(this.apiUrl+"/ReservationFM", reservation);
 }
  addPlanning(planning:Planning)
    {
@@ -184,7 +186,7 @@ export class CrudService {
     }
     listReservationByUtilisateur(id:number):Observable<ReservationRq[]>
     {
-      return this.http.get<Planning[]>(this.apiUrl + "/Planification/get-all-by-id-utilisateur/"+id);
+      return this.http.get<ReservationRq[]>(this.apiUrl + "/Reservation/get-all-by-id-utilisateur/"+id);
     }
   
   getPlanningById(id:number): Observable<Planning>{
@@ -215,5 +217,55 @@ export class CrudService {
    {
     return this.http.post<any>(this.apiUrl+"/Evaluation",evaluation);
    }
+   AnnonceByReservation(id_reservation:number):
+   Observable<Annonce>{
+    const url =`${this.apiUrl+"/Reservation/get-annonce"}/${id_reservation}`
+    return this.http.get<Annonce>(url);
+  }
+  ClientByReservation(id_reservation:number):
+  Observable<Utilisateur>{
+   const url =`${this.apiUrl+"/Reservation/get-client"}/${id_reservation}`
+   return this.http.get<Utilisateur>(url);
+ }
+
+ updateReservation(id:number,reservation: ReservationRq) {
+  const url = `${this.apiUrl+"/Reservation"}/${id}`
+  return this.http.put<any>(url, reservation);
+}
+listReservationByAnnonceur(id_annonceur:number):
+Observable<ReservationRq[]>{
+ const url =`${this.apiUrl+"/Reservation/get-all-by-id-annonceur"}/${id_annonceur}`
+ return this.http.get<ReservationRq[]>(url);
+}
+onDeleteReservation(id : number){
+  const url =`${this.apiUrl+"/Reservation"}/${id}` 
+  return this.http.delete(url)
+}
+listReservationFDMByUtilisateur(id:number):Observable<ReservationRQFDM[]>
+    {
+      return this.http.get<ReservationRQFDM[]>(this.apiUrl + "/ReservationFM/get-all-by-id-utilisateur/"+id);
+    }
+    planificationByReservation(id_reservation:number):
+    Observable<Planning>{
+     const url =`${this.apiUrl+"/ReservationFM/get-planification"}/${id_reservation}`
+     return this.http.get<Planning>(url);
+   }
+   ClientByReservationFM(id_reservation:number):
+  Observable<Utilisateur>{
+   const url =`${this.apiUrl+"/ReservationFM/get-client"}/${id_reservation}`
+   return this.http.get<Utilisateur>(url);
+ }
+ updateReservationFM(id:number,reservation: ReservationRQFDM) {
+  const url = `${this.apiUrl+"/ReservationFM"}/${id}`
+  return this.http.put<any>(url, reservation);
+}
+onDeleteReservationFDM(id : number){
+  const url =`${this.apiUrl+"/ReservationFM"}/${id}` 
+  return this.http.delete(url)
+}
+listeReservationFMByPlanning(id_planning:number):Observable<ReservationFDM[]>
+{
+  return this.http.get<ReservationFDM[]>(this.apiUrl + "/ReservationFM/get-all-by-id-Planning/"+id_planning);
+}
 
 }
