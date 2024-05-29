@@ -22,6 +22,7 @@ export class ServicenettoyageComponent implements OnInit {
   searchQuery: string = '';
   searchCityQuery: string = '';
   activefemme: string = '';
+  IsloggedIn: boolean;
   paymentHandler: any = null;
   listReservation: import("c:/P1_frontend/frontend/src/app/Entites/ReservationFDM.Entites").ReservationFDM[][];
   listConfirmation: boolean[];
@@ -29,6 +30,8 @@ export class ServicenettoyageComponent implements OnInit {
   constructor(private crudService: CrudService, private route: Router, private router: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.IsloggedIn = this.crudService.isLoggedIn(); // Utilisez crudService au lieu de service
+
     this.crudService.getPlanning().subscribe((planning: Planning[]) => {
       this.listeplanning = planning;
       const observables = this.listeplanning.map(i => this.crudService.getUtilisateurByPlanning(i.id));
@@ -121,6 +124,11 @@ export class ServicenettoyageComponent implements OnInit {
   }
 
   reserver(rq: ReservationFM) {
+    if (!this.IsloggedIn) {
+      this.messageCommande = `<div class="alert alert-warning" role="alert">Vous devez être connecté pour réserver.</div>`;
+      return;
+    }
+
     this.messageCommande = `<div class="alert alert-primary" role="alert">Veuillez patienter ...</div>`;
     let datas = this.crudService.getUserInfo(); // Utilisation de crudService au lieu de service
 
@@ -141,6 +149,11 @@ export class ServicenettoyageComponent implements OnInit {
   }
 
   makePayment(amount: any) {
+    if (!this.IsloggedIn) {
+      this.messageCommande = `<div class="alert alert-warning" role="alert">Vous devez être connecté pour effectuer un paiement.</div>`;
+      return;
+    }
+
     const paymentHandler = (<any>window).StripeCheckout.configure({
       key: 'pk_test_51PFI24F29zVOYaoLNwA55lQnMETgMsgILXooIySTysEtaUYck09EzbfHklFnfQQm2zmmtZam1Ss796gimwKUNUv4006HgVUZXa',
       locale: 'auto',
