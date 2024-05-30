@@ -142,7 +142,7 @@
                       <div class="property-card property-card--row" *ngIf="listAnnonce[i]">
                         <div class="property-card__head">
                           <div class="property-card__img">
-                            <img src="{{listAnnonce[i].image}}" alt="Image de l'annonce" class="fixed-size-image">
+                            <img src="{{listAnnonce[i].image[0]}}" alt="Image de l'annonce" class="fixed-size-image">
                           </div>
                           <a href="property-grid.html" class="link property-card__tag d-inline-block bg-neutral-0 :bg-primary-300 clr-primary-300 :clr-neutral-0 py-2 px-4 rounded-pill fw-medium"> {{listAnnonce[i].type_d_hebergement}} </a>
                   <button class="property-card__fav w-10 h-10 rounded-circle bg-neutral-0 d-grid place-content-center border-0 clr-primary-300">

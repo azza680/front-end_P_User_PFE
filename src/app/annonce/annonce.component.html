@@ -342,10 +342,11 @@
                                             <span class="d-flex flex-column align-items-center justify-content-center py-12">
                                               
                                               <!--
-                                              <input class="form-control" type="file" id="image" name="dzImage" accept="image/*" (change)="onSelect($event)" multiple>
+                                                                                              <input class="form-control" type="file" id="image" name="dzImage" accept="image/*" (change)="onSelectFile($event)" formControlName="image" >
+
                                               -->                                             
 
-                                              <input class="form-control" type="file" id="image" name="dzImage" accept="image/*" (change)="onSelectFile($event)" formControlName="image" >
+                                              <input class="form-control" type="file" id="image" name="dzImage" accept="image/*" (change)="onSelect($event)" multiple>
 
 
                                               <span class="d-flex align-items-center justify-content-center flex-wrap gap-5">

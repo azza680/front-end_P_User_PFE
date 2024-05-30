@@ -21,24 +21,25 @@
   <!-- /Header -->
   <div class="bg-primary-5p">
     <form *ngIf="enableForm" (ngSubmit)="done()" [formGroup]="checkoutParentGroup">
-    <div class="py-4">
+     <div class="py-4">
+    
       <div class="container-fluid">
         <div class="row g-4">
           <div class="col-lg-4">
             <div class="row g-4">
               <div class="col-md-6">
-                <a href="assets/img/property-details-img-1.jpg" class="link property-gallery">
-                  <img src="assets/img/property-details-img-1.jpg" alt="image" class="img-fluid w-100">
+                <a href="{{annonce.image[2]}}" class="link property-gallery">
+                  <img src="{{annonce.image[2]}}" alt="image" class="img-fluid w-100 h-100 object-fit-cover">
                 </a>
               </div>
               <div class="col-md-6">
-                <a href="assets/img/property-details-img-2.jpg" class="link property-gallery">
-                  <img src="assets/img/property-details-img-2.jpg" alt="image" class="img-fluid w-100">
+                <a href="{{annonce.image[3]}}" class="link property-gallery">
+                  <img src="{{annonce.image[3]}}" alt="image" class="img-fluid w-100 h-100 object-fit-cover">
                 </a>
               </div>
               <div class="col-12">
-                <a href="assets/img/property-details-img-3.jpg" class="link property-gallery">
-                  <img src="assets/img/property-details-img-3.jpg" alt="image" class="img-fluid w-100">
+                <a href="{{annonce.image[1]}}" class="link property-gallery">
+                  <img src="{{annonce.image[1]}}" alt="image" class="img-fluid w-100 h-100 object-fit-cover">
                 </a>
               </div>
             </div>
@@ -52,18 +53,18 @@
           <div class="col-lg-4">
             <div class="row g-4">
               <div class="col-12">
-                <a href="assets/img/property-details-img-5.jpg" class="link property-gallery">
-                  <img src="assets/img/property-details-img-5.jpg" alt="image" class="img-fluid w-100">
+                <a href="{{annonce.image[4]}}" class="link property-gallery">
+                  <img src="{{annonce.image[4]}}" alt="image" class="img-fluid w-100  object-fit-cover">
                 </a>
               </div>
               <div class="col-md-6">
-                <a href="assets/img/property-details-img-6.jpg" class="link property-gallery">
-                  <img src="assets/img/property-details-img-6.jpg" alt="image" class="img-fluid w-100">
+                <a href="{{annonce.image[5]}}" class="link property-gallery">
+                  <img src="{{annonce.image[5]}}" alt="image" class="img-fluid  object-fit-cover">
                 </a>
               </div>
               <div class="col-md-6">
-                <a href="assets/img/property-details-img-7.jpg" class="link property-gallery">
-                  <img src="assets/img/property-details-img-7.jpg" alt="image" class="img-fluid w-100">
+                <a href="{{annonce.image[6]}}" class="link property-gallery">
+                  <img src="{{annonce.image[6]}}" alt="image" class="img-fluid w-100 h-100 object-fit-cover">
                 </a>
               </div>
             </div>
@@ -71,6 +72,8 @@
         </div>
       </div>
     </div>
+    
+    
     <div class="container" >
       <div class="row" >
         <div class="col-xl-8">

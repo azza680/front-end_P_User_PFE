@@ -9,7 +9,7 @@ export class Annonce{
         public equipement?:string[],
         public equipement_specail?:string[],
         public equipement_securite?:string[],
-        public image?:string,
+        public image?:string[],
         public titre?:string,
         public description?:string,
         public reduction_semaine?:boolean,
