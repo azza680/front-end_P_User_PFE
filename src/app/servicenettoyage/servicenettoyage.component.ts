@@ -5,6 +5,7 @@ import { Planning } from '../Entites/Planning.Entites';
 import { forkJoin } from 'rxjs';
 import { ReservationFM } from '../Entites/ReservationFM.Entites';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ReservationFDM } from '../Entites/ReservationFDM.Entites';
 
 @Component({
   selector: 'app-servicenettoyage',
@@ -24,7 +25,7 @@ export class ServicenettoyageComponent implements OnInit {
   activefemme: string = '';
   IsloggedIn: boolean;
   paymentHandler: any = null;
-  listReservation: import("c:/P1_frontend/frontend/src/app/Entites/ReservationFDM.Entites").ReservationFDM[][];
+  listReservation:ReservationFDM[];
   listConfirmation: boolean[];
 
   constructor(private crudService: CrudService, private route: Router, private router: ActivatedRoute) { }
