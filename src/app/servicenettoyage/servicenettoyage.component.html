@@ -81,10 +81,33 @@
           <div class="py-6 px-8 bg-neutral-0 rounded-4 shadow-sm">
             <h4 class="mb-0">Rechercher</h4>
             <div class="hr-dashed my-4 opacity-50"></div>
+            
+            
+            
+            <div class="property-search__select property-search__col rounded-pill d-flex align-items-center gap-2 px-6 py-3">
+              <span class="material-symbols-outlined mat-icon">search</span>
+              <input type="text" class="form-control" placeholder="Rechercher par nom..." [(ngModel)]="searchQuery" (ngModelChange)="searchUtilisateurParNom()">
+            </div>
+            
+            <div *ngIf="user && user.length > 0" class="mt-4">
+              <h5>Les femmes de ménage</h5>
+              <div *ngFor="let utilisateur of user" class="d-flex align-items-center mb-3">
+                <img src="assets/img/user-3.jpg" alt="image" class="img-fluid w-8 h-8 rounded-circle object-fit-cover me-3">
+                <span>{{ utilisateur.nom }} {{ utilisateur.prenom }}</span>
+                <button type="button" class="btn btn-outline-primary py-1 px-4 rounded-pill ms-auto fw-semibold" (click)="selectfemme(utilisateur)" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  Détails
+                </button>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="row g-4">
             <div class="mb-4">
               <div class="property-search__select property-search__col rounded-pill d-flex align-items-center gap-2 px-6 py-3">
                 <span class="material-symbols-outlined mat-icon">location_city</span>
-                <select class="form-control" [(ngModel)]="searchCityQuery" (ngModelChange)="searchPlanning()">
+                <select class="form-control" >
                   <option value="" disabled selected>Votre choix de recherche..</option>
                 <option value="Ariana">Ariana</option>
                 <option value="Béja">Béja</option>
@@ -111,31 +134,11 @@
                 <option value="Tunis">Tunis</option>
                 <option value="Zaghouan">Zaghouan</option>
                 </select>
+                <button class="btn btn-primary"  [(ngModel)]="searchCityQuery" (ngModelChange)="searchPlanningPargouvernorat()">Rechercher</button>
+
               </div>
             </div>
-            
-            <div class="hr-dashed my-4 opacity-50"></div>
-            
-            <div class="property-search__select property-search__col rounded-pill d-flex align-items-center gap-2 px-6 py-3">
-              <span class="material-symbols-outlined mat-icon">search</span>
-              <input type="text" class="form-control" placeholder="Rechercher par nom..." [(ngModel)]="searchQuery" (ngModelChange)="searchUtilisateurParNom()">
-            </div>
-            
-            <div *ngIf="user && user.length > 0" class="mt-4">
-              <h5>Les femmes de ménage</h5>
-              <div *ngFor="let utilisateur of user" class="d-flex align-items-center mb-3">
-                <img src="assets/img/user-3.jpg" alt="image" class="img-fluid w-8 h-8 rounded-circle object-fit-cover me-3">
-                <span>{{ utilisateur.nom }} {{ utilisateur.prenom }}</span>
-                <button type="button" class="btn btn-outline-primary py-1 px-4 rounded-pill ms-auto fw-semibold" (click)="selectfemme(utilisateur)" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                  Détails
-                </button>
-              </div>
-            </div>
-            
-          </div>
-        </div>
-        <div class="col-md-8">
-          <div class="row g-4">
+         
             <div class="container-xl">
               <div class="row g-4" *ngFor="let planning of listeplanning.slice().reverse();; let i = index">
                 <div class="col-12" >
@@ -167,7 +170,12 @@
                               </li>
                               <li class="mb-2">
                                 <span class="d-block fs-6">
-                                  <strong>Adresse:</strong> {{ planning.gouvernorat }}
+                                  <strong>Gouvernorat:</strong> {{ planning.gouvernorat }}
+                                </span>
+                              </li>
+                              <li class="mb-2">
+                                <span class="d-block fs-6">
+                                  <strong>Adresse:</strong> {{ planning.adresse}}
                                 </span>
                               </li>
                               <li class="mb-2">
@@ -348,7 +356,7 @@
       
       <div class="modal-footer bg-light">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-        <button (click)="makePayment(selectedPlanning?.prixParHeure)" class="btn btn-danger btn-block">
+        <button  (click)="makePayment(selectedPlanning?.prixParHeure)" class="btn btn-danger btn-block">
           Payer {{ selectedPlanning?.prixParHeure }} DNT
         </button>
         

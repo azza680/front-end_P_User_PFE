@@ -5,6 +5,7 @@ import { Planning } from '../Entites/Planning.Entites';
 import { forkJoin } from 'rxjs';
 import { ReservationFM } from '../Entites/ReservationFM.Entites';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ReservationFDM } from '../Entites/ReservationFDM.Entites';
 
 @Component({
   selector: 'app-servicenettoyage',
@@ -24,7 +25,7 @@ export class ServicenettoyageComponent implements OnInit {
   activefemme: string = '';
   IsloggedIn: boolean;
   paymentHandler: any = null;
-  listReservation: import("c:/P1_frontend/frontend/src/app/Entites/ReservationFDM.Entites").ReservationFDM[][];
+  listReservation:ReservationFDM[];
   listConfirmation: boolean[];
 
   constructor(private crudService: CrudService, private route: Router, private router: ActivatedRoute) { }
@@ -64,15 +65,16 @@ export class ServicenettoyageComponent implements OnInit {
   setActiveplanning(gouvernorat: string): void {
     this.activefemme = gouvernorat;
   }
-
-  searchPlanning(): void {
-    if (this.searchQuery.trim() !== '') {
+  
+  searchPlanningPargouvernorat(): void {
+    if (this.searchCityQuery.trim() !== '') {
       this.listeplanning = this.listeplanning.filter(planning =>
-        planning.gouvernorat.toLowerCase().includes(this.searchQuery.toLowerCase())
+        planning.gouvernorat.toLowerCase().includes(this.searchCityQuery.toLowerCase())
       );
     } else {
-      this.getPlanning();
+      this.getPlanning(); // Chargez les données initiales sans argument
     }
+  
   }
   isPastDate(date: string): boolean {
     const planningDate = new Date(date);
@@ -122,32 +124,31 @@ export class ServicenettoyageComponent implements OnInit {
 
     return filtered;
   }
-
+  
   reserver(rq: ReservationFM) {
     if (!this.IsloggedIn) {
       this.messageCommande = `<div class="alert alert-warning" role="alert">Vous devez être connecté pour réserver.</div>`;
       return;
     }
-
+  
     this.messageCommande = `<div class="alert alert-primary" role="alert">Veuillez patienter ...</div>`;
     let datas = this.crudService.getUserInfo(); // Utilisation de crudService au lieu de service
-
+  
     rq.id_client = datas?.id;
-    
-    console.log("hathy reservation ",rq)
-
+  
+    console.log("hathy reservation ", rq);
+  
     this.crudService.reserverFromApii(rq).subscribe((data: any) => {
       this.route.navigate(['mes_reservation']);
       this.messageCommande = `<div class="alert alert-success" role="alert">Réservé avec succès</div>`;
     }, err => {
       this.messageCommande = `<div class="alert alert-warning" role="alert">Erreur, Veuillez réessayer !!</div>`;
     });
-
+  
     setTimeout(() => {
       this.messageCommande = "";
     }, 3000);
   }
-
   makePayment(amount: any) {
     if (!this.IsloggedIn) {
       this.messageCommande = `<div class="alert alert-warning" role="alert">Vous devez être connecté pour effectuer un paiement.</div>`;
@@ -171,14 +172,14 @@ export class ServicenettoyageComponent implements OnInit {
     });
   }
 
+
   createReservation() {
     const reservation = new ReservationFM();
     reservation.id_planification = this.selectedPlanning?.id;
-    reservation.montant_paye = this.selectedPlanning?.prixParHeure; // Exemple d'attribution du montant
-   
+    reservation.montant_paye = this.selectedPlanning?.prixParHeure;
     
-
-    this.reserver(reservation);
+    this.reserver(reservation); // Exemple d'attribution du montant
+   
   }
 
   invokeStripe() {
