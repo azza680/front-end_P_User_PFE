@@ -124,7 +124,7 @@
             <div *ngIf="user && user.length > 0" class="mt-4">
               <h5>Les femmes de ménage</h5>
               <div *ngFor="let utilisateur of user" class="d-flex align-items-center mb-3">
-                <img src="assets/img/user-3.jpg" alt="image" class="img-fluid w-8 h-8 rounded-circle object-fit-cover me-3">
+                <img src="{{utilisateur.photo}}" alt="image" class="img-fluid w-8 h-8 rounded-circle object-fit-cover me-3">
                 <span>{{ utilisateur.nom }} {{ utilisateur.prenom }}</span>
                 <button type="button" class="btn btn-outline-primary py-1 px-4 rounded-pill ms-auto fw-semibold" (click)="selectfemme(utilisateur)" data-bs-toggle="modal" data-bs-target="#exampleModal">
                   Détails
@@ -247,6 +247,11 @@
                         <div class="card border-0 shadow-sm">
                             <div class="card-body">
                                 <ul class="list-group list-group-flush">
+                                    <!-- Profile Image -->
+                                    <li class="list-group-item text-center">
+                                        <img [src]="selectedUtilisateur.photo" class="img-fluid rounded-circle" alt="Profile Image" style="max-width: 120px;">
+                                    </li>
+
                                     <!-- User Details -->
                                     <li class="list-group-item">
                                         <div class="d-flex justify-content-between">
@@ -272,14 +277,90 @@
                                             <span class="text-muted">{{ selectedUtilisateur.adresse }}</span>
                                         </div>
                                     </li>
+                                    <li class="list-group-item" *ngIf="nbAvis!=0" >
+                                      <div class="d-flex align-items-center gap-4 justify-content-between flex-wrap mb-2">
+                                        <div class="d-flex align-items-center gap-2">
+                                          <span class="material-symbols-outlined mat-icon solid fs-32 clr-tertiary-300"> star_rate </span>
+                                          <span class="fw-bold">{{moyenneEtoiles}} ({{nbAvis}}avis) </span>
+                                        </div>
+                                      
+                                      </div>
+                                      <div class="bg-primary-5p rounded-4 p-2 mb-2" *ngFor="let avis of listEvaluation; let i = index">
+                                        <div class="d-flex align-items-center flex-wrap justify-content-between gap-2">
+                                            <div class="d-flex gap-2 align-items-center">
+                                                <div class="w-10 h-10 flex-shrink-0 rounded-circle overflow-hidden">
+                                                    <img src="{{listClientAvis[i].photo}}" alt="image" class="img-fluid w-100 h-100 object-fit-cover">
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <span class="fw-bold small">{{listClientAvis[i].nom}} {{listClientAvis[i].prenom}} </span>
+                                                    <ul class="list list-row mb-1">
+                                                        <li *ngFor="let _ of [].constructor(avis.star); let i = index" >
+                                                            <span class="material-symbols-outlined mat-icon solid fs-16 clr-tertiary-300">star_rate</span>
+                                                            
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="text-end">
+                                                <p class="mb-0 small">{{avis.date | date: 'HH:mm'}}</p>
+                                                <p class="mb-0 small">{{avis.date | date: 'dd MMM yyyy'}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    
+                                    </li>
 
                                     <!-- Comment Section -->
                                     <li class="list-group-item">
-                                        <div class="d-flex flex-column">
-                                            <span class="fw-bold">Commentaire:</span>
-                                            <textarea id="message" name="message" rows="4" cols="50" class="form-control mt-2"></textarea>
-                                        </div>
-                                    </li>
+                                      <div class="d-flex flex-column">
+                                        <form (ngSubmit)="addNewAvis()">
+                                          <span class="fw-bold">Votre avis:</span>
+                                          <div id="container" [class.readOnly]="readonly" class="d-flex flex-column justify-content-between" style="height: 100%;">
+                                              <div>
+                                                <div id="container" [class.readOnly]="readonly">
+                                                  <fa-icon
+                                                    [class.rated]="rating >= 5"
+                                                    [icon]="faStar"
+                                                    (click)="setRating(5)"
+                                                  ></fa-icon>
+                                                  <fa-icon
+                                                    [class.rated]="rating >= 4"
+                                                    [icon]="faStar"
+                                                    (click)="setRating(4)"
+                                                  ></fa-icon>
+                                                
+                                                  <fa-icon
+                                                    [class.rated]="rating >= 3"
+                                                    [icon]="faStar"
+                                                    (click)="setRating(3)"
+                                                  ></fa-icon>
+                                                
+                                                  <fa-icon
+                                                    [class.rated]="rating >= 2"
+                                                    [icon]="faStar"
+                                                    (click)="setRating(2)"
+                                                  ></fa-icon>
+                                                
+                                                  <fa-icon
+                                                    [class.rated]="rating >= 1"
+                                                    [icon]="faStar"
+                                                    (click)="setRating(1)"
+                                                  ></fa-icon>
+                                                </div>
+                                                
+                                                  {{rating}}
+                                              </div>
+                                              <div class="d-flex justify-content-end mt-auto">
+                                                  <button type="submit" class="btn btn-primary">Envoyer</button>
+                                              </div>
+                                          </div>
+                                        </form>
+                                      </div>
+                                  </li>
+                                  
+                                  
                                 </ul>
                             </div>
                         </div>
@@ -290,12 +371,12 @@
             <!-- Modal Footer -->
             <div class="modal-footer bg-light">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                <button type="button" class="btn btn-primary">Envoyer</button>
-
+                
             </div>
         </div>
     </div>
 </div>
+
 
 <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
   <div class="modal-dialog">

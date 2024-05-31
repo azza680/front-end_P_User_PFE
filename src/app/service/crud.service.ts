@@ -16,6 +16,7 @@ import { JwtHelperService } from '@auth0/angular-jwt'
 import { ReservationFM } from '../Entites/ReservationFM.Entites';
 import { ReservationFDM } from '../Entites/ReservationFDM.Entites';
 import { ReservationRQFDM } from '../Entites/ReservationRQFDM.Entites';
+import { EvaluationFDM } from '../Entites/EvaluationFDM.Entites';
 
 
 @Injectable({
@@ -280,4 +281,19 @@ listeReservationFMByPlanning(id_planning:number):Observable<ReservationFDM[]>
   getReservationById(id:number): Observable<ReservationRq>{
     return this.http.get<ReservationRq>(this.apiUrl + "/Reservation/"+id);
   }
+
+  listEvaluationByfdm(id:number):Observable<EvaluationFDM[]>{const url =`${this.apiUrl+"/EvaluationFDM/get-all-by-id-fdm"}/${id}`
+  return this.http.get<EvaluationFDM[]>(url);}
+  SupprimerEvaluationFDM(id : number){
+    const url =`${this.apiUrl+"/EvaluationFDM"}/${id}`
+    return this.http.delete(url)
+  }
+  getUtilisateurByEvaluationFDM(id:number): Observable<Utilisateur>{
+    const url =`${this.apiUrl+"/EvaluationFDM/get-utilisateur"}/${id}`
+    return this.http.get<Utilisateur>(url);
+  }
+  addEvaluationFDM(evaluation:EvaluationFDM)
+   {
+    return this.http.post<any>(this.apiUrl+"/EvaluationFDM",evaluation);
+   }
 }

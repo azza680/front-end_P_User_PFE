@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Utilisateur } from '../Entites/Utilisateur.Entites';
 import { CrudService } from '../service/crud.service';
 import { Planning } from '../Entites/Planning.Entites';
@@ -6,6 +6,10 @@ import { forkJoin } from 'rxjs';
 import { ReservationFM } from '../Entites/ReservationFM.Entites';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReservationFDM } from '../Entites/ReservationFDM.Entites';
+import { faStar } from '@fortawesome/free-solid-svg-icons/faStar';
+import { EvaluationFDM } from '../Entites/EvaluationFDM.Entites';
+import { NgToastService } from 'ng-angular-popup';
+
 
 @Component({
   selector: 'app-servicenettoyage',
@@ -27,8 +31,24 @@ export class ServicenettoyageComponent implements OnInit {
   paymentHandler: any = null;
   listReservation:ReservationFDM[];
   listConfirmation: boolean[];
+  nbAvis: number;
+  listEvaluation: EvaluationFDM[]=[];
+  listClientAvis: Utilisateur[]=[];
+  moyenneEtoiles: number;
+  k: number=0;
 
-  constructor(private crudService: CrudService, private route: Router, private router: ActivatedRoute) { }
+  constructor(private crudService: CrudService, private route: Router, private router: ActivatedRoute,private toast:NgToastService,) { }
+
+
+  @Input() rating: number = 0;
+  @Input() readonly: boolean = false;
+  faStar = faStar;
+
+  setRating(rating: number) {
+    if (!this.readonly) {
+      this.rating = rating;
+    }
+  }
 
   ngOnInit(): void {
     this.IsloggedIn = this.crudService.isLoggedIn(); // Utilisez crudService au lieu de service
@@ -42,8 +62,91 @@ export class ServicenettoyageComponent implements OnInit {
       });
     });
 
+    
+
     this.getUtilisateursParRole('Femme de menage');
   }
+  addNewAvis() {
+    if (!this.IsloggedIn) {
+      this.toast.info({
+        detail: 'Message d\'erreur',
+        summary: 'Authentifiez-vous avant.',
+      });
+      this.connexion();
+    } else {
+      if (this.rating !== 0) {
+        const datas = this.crudService.getUserInfo();
+  
+        if (!datas || !datas.id || !this.selectedUtilisateur || !this.selectedUtilisateur.id) {
+          this.toast.error({
+            detail: 'Message d\'erreur',
+            summary: 'Données utilisateur ou utilisateur sélectionné non valides.',
+          });
+          return;
+        }
+  
+        const avis = new EvaluationFDM(undefined, this.rating, undefined, datas.id, this.selectedUtilisateur.id);
+        console.log("hathy avis ", avis);
+        this.crudService.addEvaluationFDM(avis).subscribe(
+          res => {
+            console.log("reseltut hathy ", res);
+            this.listEvaluation.push(res); // Supposons que response contient l'avis ajouté avec un identifiant généré par le serveur
+
+            // Réinitialisez le formulaire si nécessaire
+            this.nbAvis = this.listEvaluation.length;
+            this.calculerMoyenneEtoiles(this.listEvaluation);
+
+
+            // Utiliser forkJoin pour attendre que toutes les requêtes soient terminées
+            const observables = this.listEvaluation.map(i => this.crudService.getUtilisateurByEvaluationFDM(i.id));
+            forkJoin(observables).subscribe(results => {
+              this.listClientAvis = results;
+              console.log("hatha this.listClientAvis", this.listClientAvis);
+            });
+
+            // Calculer la nouvelle moyenne des étoiles
+            
+
+            this.toast.success({
+              detail: 'Succès Message',
+              summary: 'L\'avis est ajouté avec succès',
+            });
+
+            //window.location.reload();
+          },
+          err => {
+            this.toast.error({
+              detail: 'Message d\'erreur',
+              summary: 'Problème de serveur',
+            });
+          }
+        );
+      } else {
+        this.toast.info({
+          detail: 'Message d\'erreur',
+          summary: 'Veuillez remplir tous les champs obligatoires.',
+        });
+      }
+    }
+  }
+
+  // Ajoutez cette méthode pour calculer la moyenne des étoiles
+  calculerMoyenneEtoiles(listEvaluationN:EvaluationFDM[]) {
+    
+      this.moyenneEtoiles = 0;
+    
+      const totalEtoiles = listEvaluationN.reduce((sum, evaluation) => sum + evaluation.star, 0);
+      this.moyenneEtoiles = totalEtoiles / this.listEvaluation.length;
+    
+    console.log("Nouvelle moyenne des étoiles : ", this.moyenneEtoiles);
+  }
+  
+  
+
+  connexion()
+    {
+      this.route.navigate(['/login'])
+    }
 
   getUtilisateursParRole(role: string): void {
     this.crudService.getUtilisateursParRole(role).subscribe(user => this.user = user);
@@ -51,11 +154,25 @@ export class ServicenettoyageComponent implements OnInit {
 
   selectfemme(utilisateur: Utilisateur, planningId?: number): void {
     this.selectedUtilisateur = utilisateur;
+    
     if (planningId) {
       this.crudService.getPlanningById(planningId).subscribe(planning => {
         this.selectedPlanning = planning;
       });
     }
+    this.crudService.listEvaluationByfdm(this.selectedUtilisateur.id).subscribe(evaluation => {
+      this.nbAvis=evaluation.length;
+
+      this.listEvaluation = evaluation;
+
+      // Créer un tableau d'observables pour récupérer les utilisateurs associés aux avis
+      const observables = this.listEvaluation.map(i => this.crudService.getUtilisateurByEvaluationFDM(i.id));
+      this.calculerMoyenneEtoiles(this.listEvaluation);
+      // Utiliser forkJoin pour attendre que toutes les requêtes soient terminées
+      forkJoin(observables).subscribe(results => {
+          this.listClientAvis = results;
+      });
+  });
   }
 
   selectPlanning(planning: Planning): void {
@@ -138,7 +255,7 @@ export class ServicenettoyageComponent implements OnInit {
     console.log("hathy reservation ",rq)
 
     this.crudService.reserverFromApii(rq).subscribe((data: any) => {
-      this.route.navigate(['mes_reservation']);
+      this.route.navigate(['mes_reservation']).then(()=>{window.location.reload()})
       this.messageCommande = `<div class="alert alert-success" role="alert">Réservé avec succès</div>`;
     }, err => {
       this.messageCommande = `<div class="alert alert-warning" role="alert">Erreur, Veuillez réessayer !!</div>`;

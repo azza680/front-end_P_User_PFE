@@ -295,9 +295,10 @@ addNewAvis() {
     let datas = this.service.getUserInfo();
 
     const avis = new Evaluation(undefined, data.commentaire, undefined, this.id, datas?.id);
-
+    console.log("hathy avis ",avis)
     this.service.addEvaluation(avis).subscribe(
       (response: any) => {
+        console.log("reseltut response " ,response);
         // Ajoutez l'avis à la liste existante
         this.listEvaluation.unshift(response); // Supposons que response contient l'avis ajouté avec un identifiant généré par le serveur
         // Réinitialisez le formulaire si nécessaire

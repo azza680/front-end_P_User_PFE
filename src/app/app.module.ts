@@ -34,6 +34,9 @@ import { ListeplanningComponent } from './listeplanning/listeplanning.component'
 import { ServicenettoyageComponent } from './servicenettoyage/servicenettoyage.component';
 import { ReservationMesPlanningComponent } from './reservation-mes-planning/reservation-mes-planning.component';
 
+// Import FontAwesomeModule
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,7 +67,6 @@ import { ReservationMesPlanningComponent } from './reservation-mes-planning/rese
     ListeplanningComponent,
     ServicenettoyageComponent,
     ReservationMesPlanningComponent,
-   
   ],
   imports: [
     BrowserModule,
@@ -72,7 +74,8 @@ import { ReservationMesPlanningComponent } from './reservation-mes-planning/rese
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    NgToastModule
+    NgToastModule,
+    FontAwesomeModule, // Add FontAwesomeModule here
   ],
   providers: [],
   bootstrap: [AppComponent]

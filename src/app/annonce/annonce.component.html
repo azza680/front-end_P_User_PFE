@@ -341,31 +341,32 @@
                                           <label for="dropzone-file" class="d-flex flex-column align-items-center justify-content-center w-100 cursor-pointer bg-primary-3p rounded-4">
                                             <span class="d-flex flex-column align-items-center justify-content-center py-12">
                                               
-                                              <!--
-                                                                                              <input class="form-control" type="file" id="image" name="dzImage" accept="image/*" (change)="onSelectFile($event)" formControlName="image" >
-
-                                              -->                                             
-
+                                              <!-- Message indiquant qu'il faut ajouter 7 photos -->
+                                              
+                                  
                                               <input class="form-control" type="file" id="image" name="dzImage" accept="image/*" (change)="onSelect($event)" multiple>
-
-
+                                  
                                               <span class="d-flex align-items-center justify-content-center flex-wrap gap-5">
                                                 <span class="d-flex align-items-center gap-2">
                                                   <span class="material-symbols-outlined mat-icon fw-200 clr-neutral-500 flex-shrink-0"> gpp_maybe </span>
-                                                  <span class="d-block mb-0 clr-neutral-500"> Maximum allowed file size is 9.00 MB </span>
+                                                  <span class="d-block mb-0 clr-neutral-500"> La taille maximale de fichier autorisée est de 9.00 MB </span>
                                                 </span>
                                                 <span class="d-flex align-items-center gap-2">
                                                   <span class="material-symbols-outlined mat-icon fw-200 clr-neutral-500 flex-shrink-0"> gpp_maybe </span>
-                                                  <span class="d-block mb-0 clr-neutral-500"> Maximum 10 files are allowed </span>
+                                                  <span class="d-block mb-0 clr-neutral-500"> Maximum 10 fichiers sont autorisés </span>
+                                                </span>
+                                                <span class="d-block mb-0 clr-neutral-500" >
+                                                  Vous devez ajouter 7 photos pour votre annonce.
                                                 </span>
                                               </span>
                                             </span>
-                                            <img *ngFor="let url of urls"  [src]="url" height="100" >
+                                            <img *ngFor="let url of urls" [src]="url" height="100">
                                           </label>
                                         </div>
                                       </div>
                                     </div>
                                   </div>
+                                  
                                 </div>
                               </div>
                             </div>
