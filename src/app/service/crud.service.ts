@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Utilisateur } from '../Entites/Utilisateur.Entites';
 import { Contact } from '../Entites/Contact.Entites';
-import  {Observable} from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { Annonce } from '../Entites/Annonce.Entites';
-import { NgIf } from '@angular/common';
 import { Planning } from '../Entites/Planning.Entites';
 import { ReservationRq } from '../Entites/ReservationRq.Entites';
 import { Evaluation } from '../Entites/Evaluation.Entites';
+
 
 
 
@@ -296,4 +297,19 @@ listeReservationFMByPlanning(id_planning:number):Observable<ReservationFDM[]>
    {
     return this.http.post<any>(this.apiUrl+"/EvaluationFDM",evaluation);
    }
+   listReservationFMByUtilisateur(userId: number): Observable<ReservationFM[]> {
+    const url = `${this.baseUrl}/get-all-by-id-utilisateur/${userId}`;
+    console.log(`Fetching reservations for user ID: ${userId}`);
+    return this.http.get<ReservationFM[]>(url).pipe(
+      tap((reservations: ReservationFM[]) => console.log('Fetched reservations:', reservations)),
+      catchError(this.handleError<ReservationFM[]>('listReservationFMByUtilisateur', []))
+    );
+  }
+
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      console.error(`${operation} failed: ${error.message}`);
+      return of(result as T);
+    };
+  }
 }
