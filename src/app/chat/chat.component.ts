@@ -36,6 +36,7 @@ export class ChatComponent {
   firstUserName = sessionStorage.getItem('username');
   senderEmail = sessionStorage.getItem('username');
   senderCheck = sessionStorage.getItem('username');
+  userDetails: Utilisateur;
 
   constructor(
     private chatService: ChatService, 
@@ -46,6 +47,8 @@ export class ChatComponent {
     this.chatForm = new FormGroup({
       replymessage: new FormControl()
     });
+    this.userDetails = this.userService.getUserInfo();
+
 
   }
 
@@ -91,7 +94,7 @@ export class ChatComponent {
 
     let all = setInterval(() => {
 
-      this.userService.getUtilisateur().subscribe((data) => {
+      this.userService.getUtilisateursParRole("Propriétaire").subscribe((data) => {
         // console.log(data);
 
         this.alluser = data;

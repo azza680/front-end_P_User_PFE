@@ -36,7 +36,11 @@
   <div class="section-space--sm pt-0 position-relative z-1">
     <span class="w-100 h-30 position-absolute start-0 end-0 top-0 z-n1 bg-neutral-900"></span>
     <div class="container">
-      <div class="row justify-content-center g-6">
+      <div class="row g-4">
+        <div class="col-md-5 col-lg-4 col-xl-3">
+          <app-header3></app-header3>
+          
+        </div>
         <div class="col-md-7 col-lg-8 col-xl-9">
           <div class="accordion user-accordion d-flex flex-column gap-6" id="user-info">
             <div class="accordion-item user-accordion__item shadow-3">
@@ -47,17 +51,24 @@
               </h2>
               <div id="basic-info" class="accordion-collapse collapse show" data-bs-parent="#user-info">
                 <div class="accordion-body">
+                  <form class="row g-4" (ngSubmit)="updateUtilisateur()" [formGroup]="updateForm">
                   <div class="avatar-upload mx-auto ms-md-0 mb-6">
+                    <input class="form-control " type="file" id="image" name="dzImage" accept="image/*" (change)=" onSelectFile($event)" formControlName="photo">
+
                     <div class="avatar-upload__edit">
-                      <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" class="avatar-upload__input" />
+
                       <label for="imageUpload" class="avatar-upload__label"></label>
                     </div>
+                    
+                    
                     <div class="avatar-upload__preview">
                       <div id="imagePreview" class="avatar-upload__img" style="background-image: url({{userDetails.photo}});">
                       </div>
                     </div>
                   </div>
-                  <form class="row g-4" (ngSubmit)="updateUtilisateur()" [formGroup]="updateForm">
+                  <div class="col-lg-6">
+                    
+                  </div>
                     <div class="col-lg-6">
                       <label for="full-name" class="d-block mb-2 fw-medium clr-neutral-500">Nom:</label>
                       <input type="text" id="full-name" class="form-control py-3 px-6 rounded-4" placeholder="Entrez Votre Nom" formControlName="nom">
@@ -91,11 +102,11 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div></div>
         </div>
       </div>
     </div>
-  </div>
+  
   
   <!-- /Dashboard -->
   <!-- Footer -->

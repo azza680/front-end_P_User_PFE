@@ -150,7 +150,7 @@
                         <div class="property-card property-card--row">
                           <div class="property-card__head">
                             <div class="property-card__img">
-                              <img [src]="ann.image" alt="Image de l'annonce" class="fixed-size-image" *ngIf="ann.image">
+                              <img [src]="ann.image[0]" alt="Image de l'annonce" class="fixed-size-image" *ngIf="ann.image">
                             </div>
                             <a href="property-grid.html" class="link property-card__tag d-inline-block bg-neutral-0 :bg-primary-300 clr-primary-300 :clr-neutral-0 py-2 px-4 rounded-pill fw-medium"> {{ann.type_d_hebergement}} </a>
                               <button class="property-card__fav w-10 h-10 rounded-circle bg-neutral-0 d-grid place-content-center border-0 clr-primary-300">
@@ -164,7 +164,9 @@
                                 <div class="d-flex align-items-center gap-1">
                                   <span class="material-symbols-outlined mat-icon clr-tertiary-400"> distance </span>
                                   <span class="d-inline-block">{{ann.code_postale}} {{ann.pays}} {{ann.ville}}</span>
+                                  
                                 </div>
+                               
                                 <div class="d-inline-flex align-items-center">
                                   <!-- Affichage du bouton "En attente" si l'annonce n'est pas vérifiée -->
                                   <span *ngIf="!ann.verification" class="badge bg-warning text-dark rounded-pill px-4 py-2">
@@ -199,9 +201,22 @@
                                 
                                 
                               </div>
+                              <div class="d-flex justify-content-between mb-6">
+                                <div class="d-flex align-items-center gap-1">
+                                  <span class="material-symbols-outlined mat-icon clr-neutral-600 d-inline-block mb-1" style="vertical-align: middle;">assignment</span>
+                              <span style="display: inline-block; font-size: 14px;"> Référence annonce {{ann.id}} </span>
+                                  
+                                </div>
+                                
+                                
+                                
+                              </div>
                               <a href="property-details-1.html" class="link d-block clr-neutral-700 :clr-primary-300 fs-20 fw-medium mb-7"> {{ann.titre}} </a>
+                              
+                              
 
                               <ul class="list list-row flex-wrap dotted-divider">
+                                
                                 <li>
                                   <span class="material-symbols-outlined mat-icon clr-neutral-600 d-inline-block mb-1"> home_work </span>
                                   <span class="d-block fs-14"> {{ann.nb_chamber}} Chambres </span>

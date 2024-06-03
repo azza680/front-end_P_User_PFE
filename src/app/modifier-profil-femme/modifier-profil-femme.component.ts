@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 import { Router, ActivatedRoute } from '@angular/router';
 import { Utilisateur } from '../Entites/Utilisateur.Entites';
 import { CrudService } from '../service/crud.service';
+import { NgToastService } from 'ng-angular-popup';
 
 @Component({
   selector: 'app-modifier-profil-femme',
@@ -23,7 +24,7 @@ export class ModifierProfilFemmeComponent {
     private fb: FormBuilder,
     private service: CrudService,
     private route: Router,
-    private router: ActivatedRoute
+    private router: ActivatedRoute,private toast:NgToastService
   ) 
   {
     this.userDetails = this.service.getUserInfo();
@@ -105,25 +106,31 @@ onSelectFile(event: any) {
         role: event.role, });
       }); 
       }
-
-  updateUtilisateur() {
-    let data = this.updateForm.value;
-    let utilisateur =new Utilisateur(
-      this.id,
-      data.nom,
-      data.prenom,
-      data.email,
-      data.date_de_naissance,
-      data.telephone,
-      data.adresse,
-      data.mdp, 
-      data.role,
-      this.imgURL);
-    console.log(utilisateur);
-    console.log(data);
-    this.service.updateUtilisateur(this.id,utilisateur).subscribe((res) => {
-      console.log(res);
-      this.route.navigate(['/profilfemme'])}); }
+      updateUtilisateur() {
+        let data = this.updateForm.value;
+        let utilisateur =new Utilisateur(
+          this.id,
+          data.nom,
+          data.prenom,
+          data.email,
+          data.date_de_naissance,
+          data.telephone,
+          data.adresse,
+          data.mdp, 
+          data.role,
+          true,
+          this.imgURL);
+        console.log("hatha utilisateu",utilisateur);
+        console.log("hathy data ",data);
+        this.service.updateUtilisateur(this.id,utilisateur).subscribe((res) => {
+          
+          console.log(res);
+          this.toast.info({
+            detail: 'Modifier avec succée',
+            summary: 'valide',
+          });
+          this.route.navigate(['/profilfemme'])}); }
+  
       
 
 }

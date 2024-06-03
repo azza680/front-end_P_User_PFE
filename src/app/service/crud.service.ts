@@ -160,8 +160,8 @@ export class CrudService {
   reserverFromApi(rq:ReservationRq){
     return this.http.post<any>( "http://localhost:8081/api/Reservation" ,rq );
  }
- reserverFromApii(reservation: ReservationFM) {
-  return this.http.post<any>(this.apiUrl+"/ReservationFM", reservation);
+ reserverFromApii(reservation: ReservationRQFDM) {
+  return this.http.post<any>("http://localhost:8081/api/ReservationFM", reservation);
 }
  addPlanning(planning:Planning)
    {
@@ -184,6 +184,15 @@ export class CrudService {
   }
   listePlanificationByFdm(id:number):Observable<Planning[]>{
     return this.http.get<Planning[]>(this.apiUrl + "/Planification/get-all-by-id-FDM/"+id);}
+
+
+
+    
+    listeReservationByFdm(id:number):Observable<ReservationRQFDM[]>{
+      return this.http.get<ReservationRQFDM[]>(this.apiUrl + "/ReservationFM/get-all-by-id-FDM/"+id);}
+
+
+
 
     getUtilisateursParRole(role: string): Observable<Utilisateur[]> {
       return this.http.get<Utilisateur[]>(`${this.baseUrl}/Utilisateur/role`, { params: { role } });

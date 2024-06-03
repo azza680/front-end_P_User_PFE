@@ -58,7 +58,8 @@
             <div class="chat-box__nav p-4">
               <div class="d-flex align-items-center justify-content-between flex-wrap">
                 <div class="w-15 h-15 rounded-circle overflow-hidden flex-shrink-0">
-                  <img src="assets/img/user-1.jpg" alt="image" class="w-100 h-100 object-fit-cover">
+                  <img src="{{userDetails.photo}}"  alt="image" class="w-100 h-100 object-fit-cover">
+
                 </div>
                 <div class="d-flex gap-3 align-items-center justify-content-end flex-wrap">
                   <a href="#" class="link d-inline-block flex-shrink-0 clr-neutral-700 :clr-primary-300">
@@ -157,15 +158,16 @@
               </div>
               <div class="chat-box__content-footer p-4 d-flex align-items-center flex-wrap gap-4">
                 
-                <form [formGroup]="chatForm">
-                <div class="d-flex align-items-center flex-grow-1 p-2 border border-neutral-30 bg-primary-3p rounded-pill">
-                  <input type="text" class="form-control bg-transparent border-0 flex-grow-1" placeholder="Type your message..." name=""
-                  formControlName="replymessage" (keyup.enter)="sendMessage()">
-                  <button type="button" class="d-grid place-content-center w-10 h-10 rounded-circle border-0 bg-primary-300 clr-neutral-0 flex-shrink-0" (click)="sendMessage()">
-                    <span class="material-symbols-outlined mat-icon"> near_me </span>
-                  </button>
-                </div>
+                <form [formGroup]="chatForm" class="w-100">
+                  <div class="d-flex align-items-center p-2 border border-neutral-30 bg-primary-3p rounded-pill w-100">
+                      <input type="text" class="form-control bg-transparent border-0 flex-grow-1" placeholder="Type your message..." name=""
+                      formControlName="replymessage" (keyup.enter)="sendMessage()">
+                      <button type="button" class="d-grid place-content-center w-auto h-10 rounded-circle border-0 bg-primary-300 clr-neutral-0 flex-shrink-0" (click)="sendMessage()">
+                          <span class="material-symbols-outlined mat-icon"> near_me </span>
+                      </button>
+                  </div>
               </form>
+              
               </div>
             </div>
           </div>

@@ -9,6 +9,7 @@ import { ReservationFDM } from '../Entites/ReservationFDM.Entites';
 import { faStar } from '@fortawesome/free-solid-svg-icons/faStar';
 import { EvaluationFDM } from '../Entites/EvaluationFDM.Entites';
 import { NgToastService } from 'ng-angular-popup';
+import { ReservationRQFDM } from '../Entites/ReservationRQFDM.Entites';
 
 
 @Component({
@@ -36,8 +37,12 @@ export class ServicenettoyageComponent implements OnInit {
   listClientAvis: Utilisateur[]=[];
   moyenneEtoiles: number;
   k: number=0;
+  userDetails: Utilisateur;
 
-  constructor(private crudService: CrudService, private route: Router, private router: ActivatedRoute,private toast:NgToastService,) { }
+  constructor(private crudService: CrudService, private route: Router, private router: ActivatedRoute,private toast:NgToastService,) { 
+    this.userDetails = this.crudService.getUserInfo();
+
+  }
 
 
   @Input() rating: number = 0;
@@ -154,6 +159,7 @@ export class ServicenettoyageComponent implements OnInit {
 
   selectfemme(utilisateur: Utilisateur, planningId?: number): void {
     this.selectedUtilisateur = utilisateur;
+    console.log("hathy selectfemme",this.selectedUtilisateur)
     
     if (planningId) {
       this.crudService.getPlanningById(planningId).subscribe(planning => {
@@ -242,25 +248,33 @@ export class ServicenettoyageComponent implements OnInit {
     return filtered;
   }
   
-  reserver(rq: ReservationFM) {
+  reserver(rq: ReservationRQFDM) {
     if (!this.IsloggedIn) {
       this.messageCommande = `<div class="alert alert-warning" role="alert">Vous devez être connecté pour réserver.</div>`;
       return;
     }
   
     this.messageCommande = `<div class="alert alert-primary" role="alert">Veuillez patienter ...</div>`;
-    let datas = this.crudService.getUserInfo(); // Utilisation de crudService au lieu de service
-  
-    rq.id_client = datas?.id;
+    
   
     console.log("hathy reservation ", rq);
-  
-    this.crudService.reserverFromApii(rq).subscribe((data: any) => {
+    this.crudService.reserverFromApii(rq).subscribe(
+      res => {
+        this.messageCommande = `<div class="alert alert-success" role="alert">
+      Message envoyer avec succe
+    </div>`
+    console.log("data hathy ali chtrajaa ",res)
+
       this.route.navigate(['mes_reservation']).then(()=>{window.location.reload()})
-      this.messageCommande = `<div class="alert alert-success" role="alert">Réservé avec succès</div>`;
-    }, err => {
-      this.messageCommande = `<div class="alert alert-warning" role="alert">Erreur, Veuillez réessayer !!</div>`;
-    });
+      ;
+      },
+      err => {
+        this.messageCommande = `<div class="alert alert-warning" role="alert">
+      service en panne!!!! 
+    </div>`
+
+      })
+    
   
     setTimeout(() => {
       this.messageCommande = "";
@@ -291,10 +305,11 @@ export class ServicenettoyageComponent implements OnInit {
 
 
   createReservation() {
-    const reservation = new ReservationFM();
-    reservation.id_planification = this.selectedPlanning?.id;
-    reservation.montant_paye = this.selectedPlanning?.prixParHeure;
-    
+    const reservation = new ReservationRQFDM();
+    reservation.id_planification= this.selectedPlanning?.id;
+    reservation.montant_paye = parseFloat(this.selectedPlanning?.prixParHeure);
+    reservation.id_client=this.userDetails.id
+    console.log("hathy reservation f methode create ",reservation)
     this.reserver(reservation); // Exemple d'attribution du montant
    
   }

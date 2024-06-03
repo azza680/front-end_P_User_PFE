@@ -219,6 +219,7 @@ reserver(rq:ReservationRq)
    
     console.log(rq,"what we senddddd")
     this.service.reserverFromApi(rq).subscribe((data:any)=>{
+      console.log("data hathy ali chtrajaa ",data)
       this.route.navigate(['mes_reservation'])
     
       this.messageCommande=`<div class="alert alert-success" role="alert">

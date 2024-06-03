@@ -143,11 +143,11 @@
           <div class="row g-4">
 
             <div class="container-xl">
-              <div class="row g-4" *ngFor="let planning of listeplanning.slice().reverse();; let i = index">
+              <div class="row g-4" *ngFor="let planning of listeplanning; let i = index">
                 <div class="col-12" >
-                  <div class="property-card  shadow-sm mb-4 p-3"*ngIf="isPastDate(planning.jour) " >
+                  <div class="property-card  shadow-sm mb-4 p-3" >
                     <div class="card shadow-sm mb-3">
-                      <div class="card-body p-8" *ngIf="listeutilisateur[i] && isPastDate(planning.jour)">
+                      <div class="card-body p-8" *ngIf="listeutilisateur[i] ">
                         <div  class="row align-items-center ">
                           <!-- Part for the image -->
                           <div class="col-2 d-flex align-items-center justify-content-center">
@@ -276,12 +276,7 @@
                                             <span class="text-muted">{{ selectedUtilisateur.prenom }}</span>
                                         </div>
                                     </li>
-                                    <li class="list-group-item">
-                                        <div class="d-flex justify-content-between">
-                                            <span class="fw-bold">Email:</span>
-                                            <span class="text-muted">{{ selectedUtilisateur.email }}</span>
-                                        </div>
-                                    </li>
+                                    
                                     <li class="list-group-item">
                                         <div class="d-flex justify-content-between">
                                             <span class="fw-bold">Adresse:</span>
