@@ -192,10 +192,10 @@ export class ServicenettoyageComponent implements OnInit {
   searchPlanningPargouvernorat(): void {
     if (this.searchCityQuery.trim() !== '') {
       this.listeplanning = this.listeplanning.filter(planning =>
-        planning.gouvernorat.toLowerCase().includes(this.searchCityQuery.toLowerCase())
+        planning.gouvernorat && planning.gouvernorat.toLowerCase().includes(this.searchCityQuery.toLowerCase())
       );
     } else {
-      this.getPlanning(); // Chargez les données initiales sans argument
+      this.getPlanning(); // Recharger tous les plannings si la recherche est vide
     }
   
   }

@@ -81,43 +81,7 @@
           <div class="py-6 px-8 bg-neutral-0 rounded-4 shadow-sm">
             <h4 class="mb-0">Rechercher</h4>
             <div class="hr-dashed my-4 opacity-50"></div>
-             <div class="mb-4">
-              <div class="property-search__select property-search__col rounded-pill d-flex align-items-center gap-2 px-6 py-3">
-                <span class="material-symbols-outlined mat-icon">location_city</span>
-                <select class="form-control" >
-                  <option value="" disabled selected>Votre choix de recherche..</option>
-                <option value="Ariana">Ariana</option>
-                <option value="Béja">Béja</option>
-                <option value="Ben Arous">Ben Arous</option>
-                <option value="Bizerte">Bizerte</option>
-                <option value="Gabès">Gabès</option>
-                <option value="Gafsa">Gafsa</option>
-                <option value="Jendouba">Jendouba</option>
-                <option value="Kairouan">Kairouan</option>
-                <option value="Kasserine">Kasserine</option>
-                <option value="Kébili">Kébili</option>
-                <option value="Le Kef">Le Kef</option>
-                <option value="Mahdia">Mahdia</option>
-                <option value="La Manouba">La Manouba</option>
-                <option value="Médenine">Médenine</option>
-                <option value="Monastir">Monastir</option>
-                <option value="Nabeul">Nabeul</option>
-                <option value="Sfax">Sfax</option>
-                <option value="Sidi Bouzid">Sidi Bouzid</option>
-                <option value="Siliana">Siliana</option>
-                <option value="Sousse">Sousse</option>
-                <option value="Tataouine">Tataouine</option>
-                <option value="Tozeur">Tozeur</option>
-                <option value="Tunis">Tunis</option>
-                <option value="Zaghouan">Zaghouan</option>
-                </select>
-                <button class="btn btn-primary"  [(ngModel)]="searchCityQuery" (ngModelChange)="searchPlanningPargouvernorat()">Rechercher</button>
-
-              </div>
-            </div>
-            <div class="hr-dashed my-4 opacity-50"></div>
-            
-            
+             
             
             
            
@@ -141,7 +105,47 @@
         
         <div class="col-md-8">
           <div class="row g-4">
-
+            <div class="row g-4">
+              <div class="mb-4">
+                <div class="property-search__select property-search__col rounded-pill d-flex align-items-center gap-2 px-6 py-3">
+                  <span class="material-symbols-outlined mat-icon">location_city</span>
+                  <select class="form-control" [(ngModel)]="searchCityQuery" (ngModelChange)="searchPlanningPargouvernorat()">
+                    <option value="" disabled selected>Votre choix de recherche..</option>
+                    <option value="Ariana">Ariana</option>
+                    <option value="Béja">Béja</option>
+                    <option value="Ben Arous">Ben Arous</option>
+                    <option value="Bizerte">Bizerte</option>
+                    <option value="Gabès">Gabès</option>
+                    <option value="Gafsa">Gafsa</option>
+                    <option value="Jendouba">Jendouba</option>
+                    <option value="Kairouan">Kairouan</option>
+                    <option value="Kasserine">Kasserine</option>
+                    <option value="Kébili">Kébili</option>
+                    <option value="Le Kef">Le Kef</option>
+                    <option value="Mahdia">Mahdia</option>
+                    <option value="La Manouba">La Manouba</option>
+                    <option value="Médenine">Médenine</option>
+                    <option value="Monastir">Monastir</option>
+                    <option value="Nabeul">Nabeul</option>
+                    <option value="Sfax">Sfax</option>
+                    <option value="Sidi Bouzid">Sidi Bouzid</option>
+                    <option value="Siliana">Siliana</option>
+                    <option value="Sousse">Sousse</option>
+                    <option value="Tataouine">Tataouine</option>
+                    <option value="Tozeur">Tozeur</option>
+                    <option value="Tunis">Tunis</option>
+                    <option value="Zaghouan">Zaghouan</option>
+                  </select>
+                  <button class="btn btn-outline-primary py-2 px-6 rounded-pill d-inline-flex align-items-center justify-content-center gap-2 fw-semibold w-50 text-center search-btn" (click)="searchPlanningPargouvernorat()">
+                    <span class="material-symbols-outlined mat-icon clr-neutral-600">search</span> Rechercher
+                  </button>
+                </div>
+                
+              </div>
+            </div>
+            <div class="hr-dashed my-4 opacity-50"></div>
+            
+            
             <div class="container-xl">
               <div class="row g-4" *ngFor="let planning of listeplanning; let i = index">
                 <div class="col-12" >
