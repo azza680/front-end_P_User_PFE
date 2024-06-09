@@ -38,6 +38,8 @@ export class ServicenettoyageComponent implements OnInit {
   moyenneEtoiles: number;
   k: number=0;
   userDetails: Utilisateur;
+  isSearchEmpty: boolean = false; // Add this flag
+
 
   constructor(private crudService: CrudService, private route: Router, private router: ActivatedRoute,private toast:NgToastService,) { 
     this.userDetails = this.crudService.getUserInfo();
@@ -191,14 +193,24 @@ export class ServicenettoyageComponent implements OnInit {
   
   searchPlanningPargouvernorat(): void {
     if (this.searchCityQuery.trim() !== '') {
-      this.listeplanning = this.listeplanning.filter(planning =>
+      const filteredPlanning = this.listeplanning.filter(planning =>
         planning.gouvernorat && planning.gouvernorat.toLowerCase().includes(this.searchCityQuery.toLowerCase())
       );
+
+      if (filteredPlanning.length > 0) {
+        this.listeplanning = filteredPlanning;
+        this.isSearchEmpty = false; // Search results found, reset the flag
+      } else {
+        this.isSearchEmpty = true; // No search results, set the flag
+        this.toast.info({ detail: 'Information', summary: 'Aucun résultat trouvé pour cette recherche.', duration: 3000 });
+        this.getPlanning(); // Reload all plannings
+      }
     } else {
+      this.isSearchEmpty = false; // Reset the flag when the search query is empty
       this.getPlanning(); // Recharger tous les plannings si la recherche est vide
     }
-  
   }
+  
   isPastDate(date: string): boolean {
     const planningDate = new Date(date);
     const currentDate = new Date();

@@ -25,6 +25,7 @@ import { ListeplanningComponent } from './listeplanning/listeplanning.component'
 import { AuthGuardR } from './service/authR.service';
 import { ServicenettoyageComponent } from './servicenettoyage/servicenettoyage.component';
 import { ReservationMesPlanningComponent } from './reservation-mes-planning/reservation-mes-planning.component';
+import { AuthGuardF } from './service/authF.service';
 
 const routes: Routes = [  
 {path:'',component:HomeComponent},
@@ -45,11 +46,11 @@ const routes: Routes = [
 {path:"paiment",component:PaymentComponent,canActivate:[AuthGuard]},
 {path:"mes_reservation",component:MesReservationComponent,canActivate:[AuthGuard]},
 {path:"reservation_mes_annonces",component:ReservationMesAnnoncesComponent,canActivate:[AuthGuardR]},
-{path:'profilfemme',component:ProfilfemmeComponent},
-{path:'modifier_profil_femme/:id',component:ModifierProfilFemmeComponent},
-{path:'listeplanning',component:ListeplanningComponent},
+{path:'profilfemme',component:ProfilfemmeComponent,canActivate:[AuthGuardF]},
+{path:'modifier_profil_femme/:id',component:ModifierProfilFemmeComponent,canActivate:[AuthGuardF]},
+{path:'listeplanning',component:ListeplanningComponent,canActivate:[AuthGuardF]},
 {path:'servicenettoyage',component:ServicenettoyageComponent},
-{path:'reserver_mes_planning',component:ReservationMesPlanningComponent}
+{path:'reserver_mes_planning',component:ReservationMesPlanningComponent,canActivate:[AuthGuardF]}
 
 
 
