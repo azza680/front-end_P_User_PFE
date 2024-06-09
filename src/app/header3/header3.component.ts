@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Utilisateur } from '../Entites/Utilisateur.Entites';
 import { Router } from '@angular/router';
 import { CrudService } from '../service/crud.service';
+import { ChatService } from '../service/chat.service';
+import { Chat } from '../Entites/Chat.Entites';
 
 @Component({
   selector: 'app-header3',
@@ -9,18 +11,22 @@ import { CrudService } from '../service/crud.service';
   styleUrls: ['./header3.component.css']
 })
 export class Header3Component {
-  userDetails: Utilisateur; // Type spécifique pour userDetails
   profil: Utilisateur[];
   p:number=1;
   collection:any[]
   utilisateur: any;
   isProprietaire:boolean
   IsUtilisateurIn:boolean
-  userDetails1: any;
+  userDetails1: Utilisateur;
   isFDM: boolean;
+  public alluser: any = [];
+  check = sessionStorage.getItem('username');
+  chatId: any = 0;
+  chatObj: Chat = new Chat();
+  public chatData: any = [];
 
  
-  constructor(private service:CrudService,private router:Router) { }
+  constructor(private service:CrudService,private router:Router, private chatService: ChatService) { }
 
   ngOnInit(): void {
     this.IsUtilisateurIn=this.service.isUtilisateurInIn();
@@ -29,9 +35,9 @@ export class Header3Component {
     this.isFDM=this.service.isFDM();
 
 
-    console.log(this.userDetails);
+    console.log(this.userDetails1);
     this.service.getUtilisateur().subscribe(utilisateurs => {
-      this.profil = utilisateurs.filter(user => user.id === this.userDetails.id);
+      this.profil = utilisateurs.filter(user => user.id === this.userDetails1.id);
     });
     
   
@@ -48,7 +54,36 @@ export class Header3Component {
     }
   }
 
- 
+  goToChat(emailSecondeUser: any) {
+    this.chatService.getChatByFirstUserNameAndSecondUserName(this.userDetails1.email, emailSecondeUser).subscribe(
+      (data) => {
+        this.chatId = data.chatId;
+        localStorage.setItem("chatId", this.chatId);
+
+        localStorage.setItem("gotochat", "false");
+        this.router.navigateByUrl('/chat');
+      },
+      (error) => {
+        if (error.status == 404) {
+          this.chatObj.firstUserName = this.userDetails1.nom;
+          this.chatObj.secondUserName = this.userDetails1.nom;
+          this.chatObj.emailfirstUserName= this.userDetails1.email;
+          this.chatObj.emailSecondeUser=emailSecondeUser;
+          this.chatService.createChatRoom(this.chatObj).subscribe(
+            (data) => {
+              this.chatData = data;
+              this.chatId = this.chatData.chatId;
+              localStorage.setItem("chatId", this.chatData.chatId);
+
+              localStorage.setItem("gotochat", "false");
+              this.router.navigateByUrl('/chat');
+            })
+        } else {
+
+        }
+      });
+
+  }
  
   logout(): void {
     console.log("logout");

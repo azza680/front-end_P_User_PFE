@@ -199,6 +199,9 @@ export class CrudService {
     getUtilisateursParRole(role: string): Observable<Utilisateur[]> {
       return this.http.get<Utilisateur[]>(`${this.baseUrl}/Utilisateur/role`, { params: { role } });
     }
+    getUtilisateursByEmail(email: string): Observable<Utilisateur> {
+      return this.http.get<Utilisateur>(`${this.baseUrl}/Utilisateur/email`, { params: { email } });
+    }
     listReservationByUtilisateur(id:number):Observable<ReservationRq[]>
     {
       return this.http.get<ReservationRq[]>(this.apiUrl + "/Reservation/get-all-by-id-utilisateur/"+id);
@@ -207,7 +210,7 @@ export class CrudService {
     
   
   getPlanningById(id:number): Observable<Planning>{
-    return this.http.get<Annonce>(this.apiUrl + "/Planification/"+id);
+    return this.http.get<Planning>(this.apiUrl + "/Planification/"+id);
   }
   getUtilisateurByPlanning(id:number):Observable<Utilisateur>{const url =`${this.apiUrl+"/Planification/get-utilisateur"}/${id}`
   return this.http.get<any>(url);}

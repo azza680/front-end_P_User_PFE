@@ -36,10 +36,10 @@
       </li>
      
       <li *ngIf="!isFDM">
-        <a href="chat" class="link d-flex align-items-center gap-2 clr-neutral-500 :clr-primary-300">
+        <div  class="link d-flex align-items-center gap-2 clr-neutral-500 :clr-primary-300" (click)="goToChat(userDetails1.email)">
           <span class="material-symbols-outlined mat-icon fs-20"> chat </span>
           <span class="d-block fw-medium"> Chat </span>
-        </a>
+        </div>
       </li>
       <li *ngIf="!IsUtilisateurIn && isProprietaire">
         <a href="annonce" class="link d-flex align-items-center gap-2 clr-neutral-500 :clr-primary-300">

@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 
 import { HttpClient } from '@angular/common/http';
 import { Message } from '../Entites/Message.Entites';
-import { Chat } from '../Entites/chat.Entites';
+import { Chat } from '../Entites/Chat.Entites';
 
 @Injectable({
   providedIn: 'root'
@@ -35,8 +35,8 @@ export class ChatService {
     return this.httpClient.post(this.baseUrl + "/chats/add", chat);
   }
 
-  getChatByFirstUserNameAndSecondUserName(firstUserName: String, secondUserName: String) {
-    return this.httpClient.get<Chat>(this.baseUrl + "/chats/getChatByFirstUserNameAndSecondUserName" + '?firstUserName=' + firstUserName + '&secondUserName=' + secondUserName)
+  getChatByFirstUserNameAndSecondUserName(emailfirstUserName: String, emailsecondUserName: String) {
+    return this.httpClient.get<Chat>(this.baseUrl + "/chats/getChatByFirstUserNameAndSecondUserName" + '?emailfirstUserName=' + emailfirstUserName + '&emailSecondeUser=' + emailsecondUserName)
   }
 
   getChatByFirstUserNameOrSecondUserName(username: any) {
