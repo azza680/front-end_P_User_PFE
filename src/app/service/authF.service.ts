@@ -22,12 +22,14 @@ export class AuthGuardF implements CanActivate {
   
       let isLoggedIn = this.service.isLoggedIn();
     let isFDM=this.service.isFDM();
+    let IsUtilisateurIn=this.service.isUtilisateurInIn();
+    let isProprietaire=this.service.isProprietaire();
     
   
-      if (isLoggedIn  && isFDM) {
+      if (isLoggedIn  && isFDM && !isProprietaire && !IsUtilisateurIn) {
         return true;
       }else{
-        this.router.navigate(['/login']);
+        this.router.navigate(['/page-erreur']);
   
         return false;
       }

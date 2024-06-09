@@ -20,11 +20,14 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
     let isLoggedIn = this.service.isLoggedIn();
+    let isFDM=this.service.isFDM();
+    let IsUtilisateurIn=this.service.isUtilisateurInIn();
+    let isProprietaire=this.service.isProprietaire();
 
-    if (isLoggedIn) {
+    if (isLoggedIn && !isFDM) {
       return true;
     }else{
-      this.router.navigate(['/login']);
+      this.router.navigate(['/page-erreur']);
 
       return false;
     }

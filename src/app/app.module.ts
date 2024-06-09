@@ -36,6 +36,7 @@ import { ReservationMesPlanningComponent } from './reservation-mes-planning/rese
 
 // Import FontAwesomeModule
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { PageErreurComponent } from './page-erreur/page-erreur.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     ListeplanningComponent,
     ServicenettoyageComponent,
     ReservationMesPlanningComponent,
+    PageErreurComponent,
   ],
   imports: [
     BrowserModule,
